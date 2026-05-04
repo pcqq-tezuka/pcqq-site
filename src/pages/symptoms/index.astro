@@ -1,0 +1,24 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+
+const symptoms = [
+  { href: '/symptoms/black-screen', label: '画面が真っ黒になった' },
+  { href: '/symptoms/fake-alert', label: '変な警告が出た' },
+  { href: '/symptoms/wont-start', label: '起動しない' },
+  { href: '/symptoms/slow-freezing', label: '遅い・固まる' },
+  { href: '/symptoms/no-internet', label: 'ネットが繋がらない' },
+  { href: '/symptoms/lost-photos', label: '写真・データが消えた' },
+  { href: '/symptoms/parents-pc', label: '親のPC・高齢者サポート' },
+  { href: '/symptoms/replace-or-repair', label: '買い替えか修理か迷っている' },
+];
+---
+<PageLayout title="困った症状から探す">
+  <section>
+    <h1>困った症状から探す</h1>
+    <ul>
+      {symptoms.map(s => (
+        <li><a href={s.href}>{s.label}</a></li>
+      ))}
+    </ul>
+  </section>
+</PageLayout>

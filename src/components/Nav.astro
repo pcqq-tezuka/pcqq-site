@@ -1,0 +1,19 @@
+---
+const navItems = [
+  { href: '/symptoms', label: '症状から探す' },
+  { href: '/services', label: 'サービス' },
+  { href: '/areas', label: 'エリア' },
+  { href: '/pricing', label: '料金' },
+  { href: '/faq', label: 'よくある質問' },
+  { href: '/voices', label: 'お客様の声' },
+  { href: '/blog', label: 'ブログ' },
+  { href: '/contact', label: 'お問い合わせ' },
+];
+---
+<nav>
+  <ul>
+    {navItems.map(item => (
+      <li><a href={item.href}>{item.label}</a></li>
+    ))}
+  </ul>
+</nav>

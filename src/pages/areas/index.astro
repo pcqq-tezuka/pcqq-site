@@ -1,0 +1,24 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+
+const areas = [
+  { href: '/areas/ajimu', label: '安心院町' },
+  { href: '/areas/innai', label: '院内町' },
+  { href: '/areas/yokkaichi', label: '四日市' },
+  { href: '/areas/nagasu', label: '長洲' },
+  { href: '/areas/ekikan', label: '駅館' },
+  { href: '/areas/bungotakada', label: '豊後高田市' },
+  { href: '/areas/nakatsu', label: '中津市' },
+  { href: '/areas/beppu', label: '別府市' },
+];
+---
+<PageLayout title="エリアから探す">
+  <section>
+    <h1>エリアから探す</h1>
+    <ul>
+      {areas.map(a => (
+        <li><a href={a.href}>{a.label}</a></li>
+      ))}
+    </ul>
+  </section>
+</PageLayout>

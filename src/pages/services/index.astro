@@ -1,0 +1,25 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+
+const services = [
+  { href: '/services/startup', label: '起動・動作改善' },
+  { href: '/services/ssd-upgrade', label: 'SSD換装' },
+  { href: '/services/data-recovery', label: 'データ復旧' },
+  { href: '/services/lcd-repair', label: '液晶交換' },
+  { href: '/services/network-email', label: 'ネット・メール設定' },
+  { href: '/services/virus-protection', label: 'ウイルス対策' },
+  { href: '/services/starlink', label: 'スターリンク導入' },
+  { href: '/services/security-camera', label: '防犯カメラ設置' },
+  { href: '/services/digital-inheritance', label: 'デジタル遺品整理' },
+];
+---
+<PageLayout title="サービスから探す">
+  <section>
+    <h1>サービスから探す</h1>
+    <ul>
+      {services.map(s => (
+        <li><a href={s.href}>{s.label}</a></li>
+      ))}
+    </ul>
+  </section>
+</PageLayout>

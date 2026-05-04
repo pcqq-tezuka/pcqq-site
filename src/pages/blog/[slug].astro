@@ -1,0 +1,116 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CallToAction from '../../components/CallToAction.astro';
+import {
+  getAllBlogs,
+  formatDate,
+  getOgImageUrl,
+} from '../../lib/microcms';
+import type { BlogPost } from '../../lib/microcms';
+
+// ─── SSG: 全記事パスを生成 ────────────────────────────────────
+export const getStaticPaths: GetStaticPaths = async () => {
+  try {
+    const data = await getAllBlogs();
+    return data.contents.map(post => ({
+      params: { slug: post.id },
+      props:  { post },
+    }));
+  } catch (e) {
+    console.warn('[blog/[slug]] microCMS取得失敗:', e);
+    return [];
+  }
+};
+
+// ─── Props ────────────────────────────────────────────────────
+interface Props {
+  post: BlogPost;
+}
+const { post } = Astro.props;
+
+const ogImage = getOgImageUrl(post.eyecatch);
+---
+
+<Layout
+  title={post.title}
+  description={post.excerpt ?? post.title}
+  ogImage={ogImage}
+  ogType="article"
+>
+  <article class="max-w-3xl mx-auto px-4 py-10">
+
+    <!-- パンくずリスト -->
+    <Breadcrumb items={[
+      { label: 'ホーム',  href: '/' },
+      { label: 'ブログ',  href: '/blog' },
+      { label: post.title },
+    ]} />
+
+    <!-- アイキャッチ画像 -->
+    {post.eyecatch && (
+      <div class="mt-4 mb-8 rounded-2xl overflow-hidden shadow-md">
+        <img
+          src={`${post.eyecatch.url}?w=900&auto=format`}
+          alt={post.title}
+          width={post.eyecatch.width}
+          height={post.eyecatch.height}
+          class="w-full object-cover"
+          loading="eager"
+        />
+      </div>
+    )}
+
+    <!-- ヘッダー -->
+    <header class="mb-8 {post.eyecatch ? '' : 'mt-4'}">
+      <time
+        datetime={post.publishedAt}
+        class="text-sm text-gray-400"
+      >
+        {formatDate(post.publishedAt)}
+        {post.revisedAt !== post.publishedAt && (
+          <span class="ml-3 text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">
+            更新: {formatDate(post.revisedAt)}
+          </span>
+        )}
+      </time>
+      <h1 class="text-2xl md:text-3xl font-bold text-gray-900 leading-snug mt-3">
+        {post.title}
+      </h1>
+    </header>
+
+    <!-- 本文（microCMSのリッチテキストHTML） -->
+    <div
+      class="prose prose-lg prose-gray max-w-none
+             prose-headings:font-bold prose-headings:text-gray-900
+             prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
+             prose-img:rounded-xl prose-img:shadow-sm
+             prose-code:bg-gray-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:before:content-none prose-code:after:content-none"
+      set:html={post.content}
+    />
+
+    <!-- 区切り -->
+    <hr class="my-12 border-gray-200" />
+
+    <!-- ブログ一覧へ戻る -->
+    <div class="flex justify-between items-center mb-12">
+      <a
+        href="/blog"
+        class="inline-flex items-center gap-2 text-gray-600 hover:text-blue-600 font-medium transition-colors"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        ブログ一覧へ戻る
+      </a>
+    </div>
+
+    <!-- CTA -->
+    <CallToAction
+      heading="修理・設定のご相談はお気軽に"
+      subtext="出張対応・相談無料。まずはお電話またはLINEで。"
+    />
+
+  </article>
+</Layout>

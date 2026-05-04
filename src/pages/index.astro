@@ -1,0 +1,649 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getLatestBlogs, formatDate, extractExcerpt } from '../lib/microcms';
+import type { BlogPost } from '../lib/microcms';
+
+// ブロック⑨: 最新ブログ3件をビルド時に取得
+let latestPosts: BlogPost[] = [];
+try {
+  const data = await getLatestBlogs(3);
+  latestPosts = data.contents;
+} catch (e) {
+  console.warn('[index] ブログ取得失敗（プレースホルダーを使用）:', e);
+}
+
+const PHONE     = '050-3159-9587';
+const PHONE_TEL = 'tel:05031599587';
+const LINE_URL  = 'http://line.me/ti/p/%40cbe1836f';
+
+const services = [
+  {
+    href: '/services/startup',
+    icon: '💻',
+    name: '起動・動作\nトラブル',
+    desc: 'ブルースクリーン・フリーズの原因を切り分け、復旧します。',
+  },
+  {
+    href: '/services/ssd-upgrade',
+    icon: '⚡',
+    name: 'SSD換装\n高速化',
+    desc: '起動時間を数分から20秒へ。古いPCがよみがえります。',
+  },
+  {
+    href: '/services/data-recovery',
+    icon: '💾',
+    name: 'データ復旧\n移行・救出',
+    desc: '消えたファイル、認識しないHDDから救出します。',
+  },
+  {
+    href: '/services/lcd-repair',
+    icon: '🖥️',
+    name: '液晶パネル\n交換',
+    desc: 'ヒビ割れ・黒シミの画面を新品に交換します。',
+  },
+  {
+    href: '/services/network-email',
+    icon: '📶',
+    name: 'ネット・\nメール対応',
+    desc: '繋がらない、届かないを現地で原因究明。',
+  },
+  {
+    href: '/services/virus-protection',
+    icon: '🛡️',
+    name: 'ウイルス・\nサポート詐欺',
+    desc: '偽警告・遠隔操作・不正請求の被害から守ります。',
+  },
+  {
+    href: '/services/starlink',
+    icon: '🛸',
+    name: 'スターリンク\n設置・設定',
+    desc: '光が来ない山間部でも高速ネットを実現。',
+  },
+  {
+    href: '/services/security-camera',
+    icon: '📷',
+    name: '防犯カメラ\n設置・設定',
+    desc: '屋内外の見守り・防犯を一括で。',
+  },
+  {
+    href: '/services/digital-inheritance',
+    icon: '🕊️',
+    name: 'デジタル\n遺品整理',
+    desc: 'ご家族のPC・スマホを大切に整理します。',
+  },
+];
+
+const reviews = [
+  {
+    stars: 5,
+    text: '修理の相談をしたら、すぐに来てくださいました。パソコンが起動しなくなって困っていましたが、丁寧に原因を説明してくれて、当日中に直してもらえました。',
+    author: '宇佐市のお客様',
+  },
+  {
+    stars: 5,
+    text: 'スターリンクの設置から設定まで全部お願いしました。山の中でも快適にインターネットが使えるようになって感動です。また何かあればぜひお願いしたいです。',
+    author: '安心院町のお客様',
+  },
+  {
+    stars: 5,
+    text: '高齢の母のパソコンに変な警告が出て、どこに頼めばいいかわからなかったのですが、手塚さんに来ていただいて安心しました。説明も親切でわかりやすかったです。',
+    author: '豊後高田市のお客様',
+  },
+];
+
+// ブログカードはlatestPostsから生成（取得失敗時はプレースホルダー）
+const placeholderPosts = [
+  {
+    id: '',
+    href: '/blog',
+    date: '2025年4月',
+    title: '起動しないパソコン、HDD交換で復活した事例',
+    excerpt: 'ブルースクリーンが出て起動不能になったノートパソコン。原因はHDDの物理障害でした。SSDに換装して復旧した記録です。',
+    eyecatch: null,
+  },
+  {
+    id: '',
+    href: '/blog',
+    date: '2025年3月',
+    title: 'スターリンク衛星インターネットを宇佐市農村部に設置',
+    excerpt: '光回線が引けない山間部でも高速通信が実現できました。設置から接続完了までの手順を詳しくご紹介します。',
+    eyecatch: null,
+  },
+  {
+    id: '',
+    href: '/blog',
+    date: '2025年3月',
+    title: 'サポート詐欺の被害に遭う前に — 偽警告の見分け方',
+    excerpt: '「Windowsがウイルスに感染しています」という偽の警告画面。慌てて電話しないでください。見分け方と対処法を解説。',
+    eyecatch: null,
+  },
+];
+
+const blogCards = latestPosts.length > 0
+  ? latestPosts.map(p => ({
+      id:      p.id,
+      href:    `/blog/${p.id}`,
+      date:    formatDate(p.publishedAt),
+      title:   p.title,
+      excerpt: p.excerpt ?? extractExcerpt(p.content),
+      eyecatch: p.eyecatch ?? null,
+    }))
+  : placeholderPosts;
+---
+
+<Layout
+  title="トップ"
+  description="大分県宇佐市・豊後高田市・中津市のパソコン修理・出張サポート。手塚信哉が25年の経験で丁寧に対応。相談・見積無料。050-3159-9587"
+>
+
+  <!-- ② ファーストビュー ─────────────────────────────────── -->
+  <section aria-labelledby="hero-heading" class="bg-gradient-to-br from-blue-50 via-indigo-50 to-sky-100 py-14 md:py-24">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16">
+
+        <!-- 顔写真（モバイル:上 / デスクトップ:右） -->
+        <div class="w-52 sm:w-64 md:w-80 shrink-0">
+          <div class="relative bg-gray-200 rounded-2xl overflow-hidden aspect-[3/4] shadow-xl">
+            <!-- プレースホルダー（tezuka_main.jpg 配置後は自動的に隠れる） -->
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-400 p-4">
+              <svg class="w-16 h-16 mb-3 text-gray-300" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+              </svg>
+              <p class="text-sm text-center leading-relaxed">顔写真<br>（差し替え予定）</p>
+              <p class="text-xs text-gray-300 mt-1">public/images/tezuka_main.jpg</p>
+            </div>
+            <img
+              src="/images/tezuka_main.jpg"
+              alt="手塚信哉の顔写真"
+              class="absolute inset-0 w-full h-full object-cover object-top"
+              onerror="this.style.display='none'"
+              width="320"
+              height="427"
+            />
+          </div>
+        </div>
+
+        <!-- テキスト＋CTA -->
+        <div class="flex-1 text-center md:text-left">
+          <p class="text-blue-600 font-semibold text-lg mb-3">PCQQ パソコン修理</p>
+          <h1 id="hero-heading" class="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-tight mb-5">
+            パソコンのこと、<br>宇佐の手塚に。
+          </h1>
+          <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+            25年のパソコン修理が、安心院から駆けつけます。
+          </p>
+
+          <!-- 3つのCTA -->
+          <div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+            <a
+              href={PHONE_TEL}
+              class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white px-6 py-4 rounded-xl font-bold text-lg transition-colors min-h-[64px]"
+              aria-label={`電話でお問い合わせ: ${PHONE}`}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.61 21 3 13.39 3 4c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.24 1.02l-2.21 2.2z"/>
+              </svg>
+              <div class="text-left">
+                <div class="text-xs font-normal opacity-80 leading-none mb-0.5">今すぐ電話</div>
+                <div class="leading-none">{PHONE}</div>
+              </div>
+            </a>
+            <a
+              href={LINE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white px-6 py-4 rounded-xl font-bold text-lg transition-colors min-h-[64px]"
+              aria-label="LINEで相談（新しいタブで開きます）"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.105.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+              </svg>
+              LINEで相談
+            </a>
+            <a
+              href="/contact"
+              class="flex items-center justify-center gap-2 bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white px-6 py-4 rounded-xl font-bold text-lg transition-colors min-h-[64px]"
+              aria-label="メールフォームで相談"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/>
+              </svg>
+              メールで相談
+            </a>
+          </div>
+
+          <p class="mt-4 text-sm text-gray-500">受付 9:00〜18:00 / 土日祝休</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ③ 二大分岐 ─────────────────────────────────────────── -->
+  <section aria-labelledby="split-heading" class="py-16 md:py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 id="split-heading" class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-10">
+        あなたはどちらですか?
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- カード1: 症状から ─ 見た目をカード2と完全一致 -->
+        <a
+          href="/symptoms"
+          class="group flex flex-col p-8 bg-indigo-50 border-2 border-indigo-200 rounded-2xl hover:shadow-xl hover:-translate-y-1 transition-all"
+          aria-label="困った症状から探す"
+        >
+          <div class="w-14 h-14 bg-indigo-600 rounded-xl flex items-center justify-center mb-5" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4m0 4h.01"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">困った症状から</h3>
+          <hr class="border-indigo-300 mb-4" />
+          <p class="text-gray-600 flex-1 leading-relaxed text-base">
+            パソコンの調子が悪いけど<br>何が原因かわからない方
+          </p>
+          <div class="mt-6 flex items-center justify-between bg-indigo-600 group-hover:bg-indigo-700 text-white px-5 py-3.5 rounded-xl font-bold transition-colors">
+            <span>症状から探す</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </div>
+        </a>
+
+        <!-- カード2: サービスから ─ 見た目をカード1と完全一致 -->
+        <a
+          href="/services"
+          class="group flex flex-col p-8 bg-indigo-50 border-2 border-indigo-200 rounded-2xl hover:shadow-xl hover:-translate-y-1 transition-all"
+          aria-label="サービスから探す"
+        >
+          <div class="w-14 h-14 bg-indigo-600 rounded-xl flex items-center justify-center mb-5" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">サービスから探す</h3>
+          <hr class="border-indigo-300 mb-4" />
+          <p class="text-gray-600 flex-1 leading-relaxed text-base">
+            SSDに換装したい、防犯カメラを付けたい等<br>やりたい事が明確な方
+          </p>
+          <div class="mt-6 flex items-center justify-between bg-indigo-600 group-hover:bg-indigo-700 text-white px-5 py-3.5 rounded-xl font-bold transition-colors">
+            <span>サービスを見る</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ④ 選ばれる3つの理由 ──────────────────────────────────── -->
+  <section aria-labelledby="reasons-heading" class="py-16 md:py-20 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 id="reasons-heading" class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-12">
+        PCQQが選ばれる3つの理由
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        {[
+          {
+            num: '1',
+            title: '25年以上の経験',
+            body: '東京・別府で四半世紀。困難なケースも経験豊富。どこに頼んでも直らなかった案件も、お気軽にご相談ください。',
+          },
+          {
+            num: '2',
+            title: '明朗会計',
+            body: '見積以上の料金は絶対に請求しません。作業前にしっかり説明し、ご納得いただいてから作業を開始します。',
+          },
+          {
+            num: '3',
+            title: '断られた方こそ',
+            body: '他社で断られたパソコンの相談、歓迎します。「冷やかしでも結構です」の精神で、どんな相談も真剣に向き合います。',
+          },
+        ].map(r => (
+          <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-5" aria-hidden="true">
+              <span class="text-2xl font-bold text-blue-600">{r.num}</span>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">{r.title}</h3>
+            <div class="w-8 h-1 bg-blue-500 rounded mb-4" aria-hidden="true"></div>
+            <p class="text-gray-600 leading-relaxed">{r.body}</p>
+          </div>
+        ))}
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ⑤ 9サービス（PC:3列 / タブレット:2列 / モバイル:1列） ── -->
+  <section aria-labelledby="services-heading" class="py-16 md:py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 id="services-heading" class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-2">
+        パソコンのことも、暮らしのITも。9つのサービス。
+      </h2>
+      <p class="text-center text-gray-500 mb-10">各カードをタップして詳しく見る</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {services.map(s => (
+          <a
+            href={s.href}
+            class="group flex flex-col p-6 bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-2xl transition-all"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div
+                class="w-12 h-12 bg-white group-hover:bg-blue-100 rounded-xl flex items-center justify-center text-2xl shadow-sm transition-colors shrink-0"
+                aria-hidden="true"
+              >
+                {s.icon}
+              </div>
+              <h3 class="font-bold text-gray-900 text-base leading-snug whitespace-pre-line">{s.name}</h3>
+            </div>
+            <p class="text-sm text-gray-600 flex-1 leading-relaxed mb-4">{s.desc}</p>
+            <span class="text-blue-600 text-sm font-semibold group-hover:text-blue-700 transition-colors">
+              詳しく見る →
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ⑥ 出張エリア ──────────────────────────────────────────── -->
+  <section aria-labelledby="area-heading" class="py-16 md:py-20 bg-blue-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 id="area-heading" class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-4">
+        出張エリア
+      </h2>
+      <p class="text-center text-gray-600 mb-10 leading-relaxed">
+        宇佐市安心院町を拠点に、大分県北部を中心とした広いエリアへ<br class="hidden sm:inline" />出張対応しています。
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+
+        <!-- エリアリスト -->
+        <div class="bg-white rounded-2xl p-8 shadow-sm">
+          <h3 class="font-bold text-gray-800 text-lg mb-3 flex items-center gap-2">
+            <span class="w-2 h-2 bg-blue-500 rounded-full inline-block" aria-hidden="true"></span>
+            宇佐市
+          </h3>
+          <p class="text-gray-600 leading-relaxed">
+            安心院町・院内町・四日市・長洲・駅館・柳ヶ浦・横山・上田・橋津・下乙女・新栄町ほか、宇佐市全域
+          </p>
+
+          <h3 class="font-bold text-gray-800 text-lg mt-7 mb-3 flex items-center gap-2">
+            <span class="w-2 h-2 bg-blue-400 rounded-full inline-block" aria-hidden="true"></span>
+            近隣市町
+          </h3>
+          <p class="text-gray-600 leading-relaxed">
+            豊後高田市・中津市・別府市・由布市・日出町・国東市・玖珠町・九重町
+          </p>
+
+          <div class="mt-7 bg-blue-50 border border-blue-200 rounded-xl p-4">
+            <p class="text-blue-800 text-sm leading-relaxed font-medium">
+              エリア外の方もまずはご相談ください。<br>内容によっては対応できる場合があります。
+            </p>
+          </div>
+
+          <div class="mt-4 grid grid-cols-2 gap-2">
+            <a
+              href="/areas"
+              class="flex items-center justify-center gap-1 border border-blue-300 text-blue-700 hover:bg-blue-600 hover:text-white px-4 py-3 rounded-xl text-sm font-medium transition-colors"
+            >
+              エリア一覧を見る →
+            </a>
+            <a
+              href={PHONE_TEL}
+              class="flex items-center justify-center gap-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-xl text-sm font-bold transition-colors"
+              aria-label={`電話: ${PHONE}`}
+            >
+              電話で確認する
+            </a>
+          </div>
+        </div>
+
+        <!-- 地図プレースホルダー -->
+        <div class="bg-gray-200 rounded-2xl aspect-square flex flex-col items-center justify-center text-gray-500 shadow-sm">
+          <svg class="w-16 h-16 text-gray-400 mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6-10l6-3m6 3l-6 3m6-3v13.5l-6 2.5M15 4l6 3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <p class="text-base font-medium">出張エリアマップ</p>
+          <p class="text-sm text-gray-400 mt-1">（画像差し替え予定）</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ⑦ 手塚信哉について ──────────────────────────────────── -->
+  <section aria-labelledby="profile-heading" class="py-16 md:py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 id="profile-heading" class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-12">
+        パソコンに困ったら、相談できる人がいる安心を。
+      </h2>
+
+      <div class="flex flex-col md:flex-row items-center md:items-start gap-10">
+
+        <!-- 顔写真 -->
+        <div class="w-44 md:w-52 shrink-0">
+          <div class="relative bg-gray-200 rounded-2xl overflow-hidden aspect-square shadow-lg">
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-400 p-4">
+              <svg class="w-12 h-12 mb-2 text-gray-300" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+              </svg>
+              <p class="text-xs text-center">顔写真</p>
+            </div>
+            <img
+              src="/images/tezuka_main.jpg"
+              alt="手塚信哉の顔写真"
+              class="absolute inset-0 w-full h-full object-cover object-top"
+              onerror="this.style.display='none'"
+              width="208"
+              height="208"
+            />
+          </div>
+        </div>
+
+        <!-- テキスト -->
+        <div class="flex-1 text-center md:text-left">
+          <p class="text-xl font-bold text-gray-900 mb-1">手塚 信哉（てづか のぶや）</p>
+          <p class="text-gray-500 text-sm mb-6">PCQQ パソコン訪問修理・出張サポート 代表</p>
+
+          <p class="text-gray-700 leading-relaxed mb-6 text-base">
+            東京・杉並で生まれ育ち、2012年に別府へ。介護の現場でも仕事をした経験から、高齢の方がパソコンで困っている現実を知りました。2026年、宇佐市安心院町に拠点を移し、地域に根ざしたサポートを続けています。
+          </p>
+
+          <blockquote class="border-l-4 border-blue-500 pl-5 py-1 mb-6 text-left" cite="/profile">
+            <p class="text-gray-700 text-lg font-medium leading-relaxed italic">
+              「冷やかしでも結構です。<br>まずはお電話ください。」
+            </p>
+          </blockquote>
+
+          <a
+            href="/profile"
+            class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition-colors text-base"
+          >
+            プロフィールの詳細を見る
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ⑧ お客様の声 ───────────────────────────────────────── -->
+  <section aria-labelledby="reviews-heading" class="py-16 md:py-20 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 id="reviews-heading" class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-4">
+        お客様の声
+      </h2>
+
+      <!-- Google評価バッジ -->
+      <div class="flex items-center justify-center gap-3 mb-10" aria-label="Google評価: 5つ星 4.5">
+        <div class="flex text-yellow-400 text-xl" aria-hidden="true">★★★★★</div>
+        <span class="font-bold text-gray-700 text-lg">4.5 / 5</span>
+        <span class="text-gray-500 text-sm bg-white border border-gray-200 px-2 py-0.5 rounded">Google</span>
+      </div>
+
+      <!-- レビューカード（仮データ / 後でウィジェット差し替え予定） -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        {reviews.map(r => (
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex flex-col">
+            <div class="flex gap-0.5 text-yellow-400 text-lg mb-3" aria-label={`${r.stars}つ星`}>
+              {'★'.repeat(r.stars)}
+            </div>
+            <p class="text-gray-700 leading-relaxed flex-1 mb-4">「{r.text}」</p>
+            <p class="text-sm text-gray-500 border-t border-gray-100 pt-3">— {r.author}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="text-center">
+        <a
+          href="https://www.google.com/maps"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors"
+          aria-label="Googleで全てのレビューを見る（新しいタブで開きます）"
+        >
+          Googleで全てのレビューを見る
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ⑨ ブログ最新3件 ──────────────────────────────────────── -->
+  <section aria-labelledby="blog-heading" class="py-16 md:py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 id="blog-heading" class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-10">
+        最近の修理事例・お役立ち情報
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        {blogCards.map(post => (
+          <article class="flex flex-col bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <!-- サムネイル -->
+            <a href={post.href} tabindex="-1" aria-hidden="true">
+              {post.eyecatch ? (
+                <img
+                  src={`${post.eyecatch.url}?w=480&h=270&fit=crop&auto=format`}
+                  alt={post.title}
+                  width="480"
+                  height="270"
+                  class="w-full aspect-video object-cover"
+                  loading="lazy"
+                />
+              ) : (
+                <div class="w-full aspect-video bg-gradient-to-br from-blue-100 to-indigo-200 flex items-center justify-center">
+                  <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9" stroke-linecap="round"/>
+                  </svg>
+                </div>
+              )}
+            </a>
+            <div class="p-5 flex flex-col flex-1">
+              <time class="text-xs text-gray-400 mb-2">{post.date}</time>
+              <h3 class="font-bold text-gray-900 mb-2 leading-snug">
+                <a href={post.href} class="hover:text-blue-600 transition-colors">{post.title}</a>
+              </h3>
+              <p class="text-sm text-gray-600 flex-1 leading-relaxed">{post.excerpt}</p>
+              <a href={post.href} class="mt-4 text-blue-600 text-sm font-semibold hover:text-blue-700 transition-colors">
+                続きを読む →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="text-center">
+        <a
+          href="/blog"
+          class="inline-flex items-center gap-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-3 rounded-xl font-bold transition-colors"
+        >
+          ブログ一覧を見る →
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ⑩ 最終CTA ─────────────────────────────────────────── -->
+  <section aria-labelledby="final-cta-heading" class="py-20 bg-blue-900 text-white">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+
+      <h2 id="final-cta-heading" class="text-3xl md:text-4xl font-bold mb-4">
+        パソコンのことで困っていませんか?
+      </h2>
+      <p class="text-blue-200 text-lg mb-2">電話・LINE・メール、どの方法でも結構です。</p>
+      <p class="text-white font-bold text-xl mb-12">お見積りも、相談も、すべて無料です。</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
+
+        <!-- 電話 -->
+        <a
+          href={PHONE_TEL}
+          class="flex flex-col items-center justify-center p-7 bg-blue-800 hover:bg-blue-700 active:bg-blue-600 rounded-2xl border border-blue-600 transition-colors min-h-[160px]"
+          aria-label={`電話でお問い合わせ: ${PHONE}`}
+        >
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="mb-3">
+            <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.61 21 3 13.39 3 4c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.24 1.02l-2.21 2.2z"/>
+          </svg>
+          <div class="font-bold text-xl mb-1">お電話で相談</div>
+          <div class="text-blue-200">{PHONE}</div>
+          <div class="text-blue-300 text-sm mt-1">9:00〜18:00</div>
+        </a>
+
+        <!-- LINE -->
+        <a
+          href={LINE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex flex-col items-center justify-center p-7 bg-green-700 hover:bg-green-600 active:bg-green-500 rounded-2xl border border-green-500 transition-colors min-h-[160px]"
+          aria-label="LINEで相談（新しいタブで開きます）"
+        >
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="mb-3">
+            <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.105.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+          </svg>
+          <div class="font-bold text-xl mb-1">LINEで相談</div>
+          <div class="text-green-200">友だち追加</div>
+          <div class="text-green-300 text-sm mt-1">24時間OK</div>
+        </a>
+
+        <!-- メール -->
+        <a
+          href="/contact"
+          class="flex flex-col items-center justify-center p-7 bg-blue-800 hover:bg-blue-700 active:bg-blue-600 rounded-2xl border border-blue-600 transition-colors min-h-[160px]"
+          aria-label="メールフォームで相談"
+        >
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="mb-3">
+            <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/>
+          </svg>
+          <div class="font-bold text-xl mb-1">メールで相談</div>
+          <div class="text-blue-200">お問合せフォーム</div>
+          <div class="text-blue-300 text-sm mt-1">24時間OK</div>
+        </a>
+
+      </div>
+
+      <p class="text-blue-200 text-base leading-relaxed">
+        「パソコンのことが全然わからない」「他社で断られた」「料金が不安」<br class="hidden sm:inline" />
+        ——どんな相談でもまず一度お電話ください。
+      </p>
+    </div>
+  </section>
+
+</Layout>

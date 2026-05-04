@@ -1,0 +1,78 @@
+---
+interface Props {
+  heading?: string;
+  subtext?: string;
+}
+
+const {
+  heading = 'お気軽にご相談ください',
+  subtext = '出張対応・相談無料。まずはお電話またはLINEで。',
+} = Astro.props;
+---
+
+<section
+  class="bg-blue-50 border border-blue-100 rounded-2xl px-6 py-10 my-12"
+  aria-labelledby="cta-heading"
+>
+  <h2
+    id="cta-heading"
+    class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-2"
+  >
+    {heading}
+  </h2>
+  {subtext && (
+    <p class="text-center text-gray-600 text-base mb-8">{subtext}</p>
+  )}
+
+  <!-- 3つのCTAボタン -->
+  <div class="flex flex-col sm:flex-row gap-4 justify-center items-stretch max-w-2xl mx-auto">
+
+    <!-- 電話 -->
+    <a
+      href="tel:05031599587"
+      class="flex-1 flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white px-6 py-5 rounded-2xl font-bold transition-colors min-h-[80px]"
+      aria-label="電話でお問い合わせ: 050-3159-9587"
+    >
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="shrink-0">
+        <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.61 21 3 13.39 3 4c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.24 1.02l-2.21 2.2z"/>
+      </svg>
+      <div class="text-left">
+        <div class="text-sm font-normal opacity-90 leading-none mb-1">今すぐ電話</div>
+        <div class="text-xl leading-none">050-3159-9587</div>
+      </div>
+    </a>
+
+    <!-- LINE -->
+    <a
+      href="http://line.me/ti/p/%40cbe1836f"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex-1 flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white px-6 py-5 rounded-2xl font-bold transition-colors min-h-[80px]"
+      aria-label="LINEでお問い合わせ（新しいタブで開きます）"
+    >
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="shrink-0">
+        <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.105.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+      </svg>
+      <div class="text-left">
+        <div class="text-sm font-normal opacity-90 leading-none mb-1">気軽にテキストで</div>
+        <div class="text-xl leading-none">LINE で相談</div>
+      </div>
+    </a>
+
+    <!-- メール -->
+    <a
+      href="/contact"
+      class="flex-1 flex items-center justify-center gap-3 bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white px-6 py-5 rounded-2xl font-bold transition-colors min-h-[80px]"
+      aria-label="メールフォームでお問い合わせ"
+    >
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0">
+        <rect x="2" y="4" width="20" height="16" rx="2"/>
+        <polyline points="2,4 12,13 22,4"/>
+      </svg>
+      <div class="text-left">
+        <div class="text-sm font-normal opacity-90 leading-none mb-1">24時間受付</div>
+        <div class="text-xl leading-none">メールで送る</div>
+      </div>
+    </a>
+  </div>
+</section>

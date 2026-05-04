@@ -1,0 +1,27 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* 高齢者向け: 最小フォントサイズを16px確保 */
+    font-size: 16px;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* フォーカスリングをわかりやすく */
+  :focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  /* iOS safe area対応（PhoneFloat用） */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
