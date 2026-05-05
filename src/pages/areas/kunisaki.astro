@@ -1,0 +1,96 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CallToAction from '../../components/CallToAction.astro';
+---
+
+<Layout
+  title="国東市のパソコン修理・出張サポート | PCQQ"
+  description="国東市のパソコン出張修理。出張料4,000円。国東半島・国東町・武蔵町・安岐町・国見町に対応。他社が出張しにくいエリアでも積極対応。"
+>
+  <article class="max-w-3xl mx-auto px-4 py-10">
+
+    <Breadcrumb items={[
+      { label: 'ホーム', href: '/' },
+      { label: '出張対応エリア', href: '/areas' },
+      { label: '国東市' },
+    ]} />
+
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mt-3 mb-2">
+      国東市のパソコン修理・出張サポート
+    </h1>
+    <p class="text-gray-500 mb-8">国東半島へ出張修理に伺います</p>
+
+    <div class="bg-indigo-50 rounded-2xl p-5 mb-8 flex items-center gap-4">
+      <span class="text-3xl shrink-0">📍</span>
+      <div>
+        <div class="font-bold text-indigo-800">出張料: 4,000円</div>
+        <div class="text-sm text-indigo-700">大分県内（宇佐市以外）への出張料は一律4,000円。国東市全域に伺います。</div>
+      </div>
+    </div>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">国東市での対応エリア</h2>
+      <p class="text-sm text-gray-600 leading-relaxed">
+        国東町・武蔵町・安岐町・国見町<br />
+        <span class="text-gray-400 text-xs">※姫島村は別途ご相談（フェリー利用）</span>
+      </p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">国東市・国東半島でよくあるご依頼</h2>
+      <ul class="space-y-2">
+        {[
+          '山間部でのネット環境改善（スターリンク含む）',
+          '高齢者のパソコン操作相談',
+          '別荘・移住者宅でのIT環境整備',
+          '防犯カメラ設置',
+          '起動しない・動作が遅いパソコンの修理',
+        ].map(item => (
+          <li class="flex items-start gap-2 text-gray-700 text-sm">
+            <span class="text-blue-500 mt-0.5 shrink-0">✓</span>{item}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">国東半島は積極対応しています</h2>
+      <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+        <p class="text-gray-700 leading-relaxed text-sm">
+          国東半島は地理的に他の業者が出張対応しにくいエリアですが、
+          PCQQでは積極的に出張対応しています。
+          「近くに修理屋がない」という方もお気軽にご連絡ください。
+        </p>
+      </div>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">料金目安</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="text-left px-4 py-3 rounded-tl-lg font-bold text-gray-700">内容</th>
+              <th class="text-right px-4 py-3 rounded-tr-lg font-bold text-gray-700">目安料金</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ['出張料', '4,000円'],
+              ['トラブル診断', '2,000円（原因が明らかな場合は不要）'],
+              ['修理・設定（内容による）', '3,000円〜'],
+            ].map(([label, price], i) => (
+              <tr class={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                <td class="px-4 py-3 text-gray-700 border-t border-gray-100">{label}</td>
+                <td class="px-4 py-3 text-right font-medium text-gray-900 border-t border-gray-100">{price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <CallToAction heading="国東市のパソコントラブルはPCQQへ" subtext="相談無料。まずお電話またはLINEでご連絡ください。" />
+  </article>
+</Layout>

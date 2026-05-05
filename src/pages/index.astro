@@ -170,7 +170,7 @@ const blogCards = latestPosts.length > 0
             パソコンのこと、<br>宇佐の手塚に。
           </h1>
           <p class="text-xl text-gray-600 mb-8 leading-relaxed">
-            25年のパソコン修理が、安心院から駆けつけます。
+            25年の経験、パソコン修理のプロフェッショナルが安心院から駆けつけます。
           </p>
 
           <!-- 3つのCTA -->
@@ -358,65 +358,78 @@ const blogCards = latestPosts.length > 0
   <section aria-labelledby="area-heading" class="py-16 md:py-20 bg-blue-50">
     <div class="max-w-6xl mx-auto px-4">
       <h2 id="area-heading" class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-4">
-        出張エリア
+        出張対応エリア
       </h2>
       <p class="text-center text-gray-600 mb-10 leading-relaxed">
-        宇佐市安心院町を拠点に、大分県北部を中心とした広いエリアへ<br class="hidden sm:inline" />出張対応しています。
+        宇佐市安心院町を拠点に、大分県全域、<br class="hidden sm:inline" />福岡・熊本・宮崎の一部地域へ出張します。
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+      <div class="space-y-4 mb-8">
 
-        <!-- エリアリスト -->
-        <div class="bg-white rounded-2xl p-8 shadow-sm">
-          <h3 class="font-bold text-gray-800 text-lg mb-3 flex items-center gap-2">
-            <span class="w-2 h-2 bg-blue-500 rounded-full inline-block" aria-hidden="true"></span>
-            宇佐市
-          </h3>
-          <p class="text-gray-600 leading-relaxed">
-            安心院町・院内町・四日市・長洲・駅館・柳ヶ浦・横山・上田・橋津・下乙女・新栄町ほか、宇佐市全域
-          </p>
-
-          <h3 class="font-bold text-gray-800 text-lg mt-7 mb-3 flex items-center gap-2">
-            <span class="w-2 h-2 bg-blue-400 rounded-full inline-block" aria-hidden="true"></span>
-            近隣市町
-          </h3>
-          <p class="text-gray-600 leading-relaxed">
-            豊後高田市・中津市・別府市・由布市・日出町・国東市・玖珠町・九重町
-          </p>
-
-          <div class="mt-7 bg-blue-50 border border-blue-200 rounded-xl p-4">
-            <p class="text-blue-800 text-sm leading-relaxed font-medium">
-              エリア外の方もまずはご相談ください。<br>内容によっては対応できる場合があります。
-            </p>
+        <!-- 宇佐市内 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border-l-4 border-blue-600">
+          <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+            <h3 class="font-bold text-gray-900 text-base">宇佐市内</h3>
+            <span class="text-sm font-bold text-blue-700 bg-blue-100 px-3 py-1 rounded-full">出張料 2,000円</span>
           </div>
-
-          <div class="mt-4 grid grid-cols-2 gap-2">
-            <a
-              href="/areas"
-              class="flex items-center justify-center gap-1 border border-blue-300 text-blue-700 hover:bg-blue-600 hover:text-white px-4 py-3 rounded-xl text-sm font-medium transition-colors"
-            >
-              エリア一覧を見る →
-            </a>
-            <a
-              href={PHONE_TEL}
-              class="flex items-center justify-center gap-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-xl text-sm font-bold transition-colors"
-              aria-label={`電話: ${PHONE}`}
-            >
-              電話で確認する
-            </a>
-          </div>
+          <p class="text-sm text-gray-600">駅館・四日市・長洲・安心院・院内ほか宇佐市全域</p>
         </div>
 
-        <!-- 地図プレースホルダー -->
-        <div class="bg-gray-200 rounded-2xl aspect-square flex flex-col items-center justify-center text-gray-500 shadow-sm">
-          <svg class="w-16 h-16 text-gray-400 mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6-10l6-3m6 3l-6 3m6-3v13.5l-6 2.5M15 4l6 3" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <p class="text-base font-medium">出張エリアマップ</p>
-          <p class="text-sm text-gray-400 mt-1">（画像差し替え予定）</p>
+        <!-- 大分県内 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border-l-4 border-indigo-400">
+          <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+            <h3 class="font-bold text-gray-900 text-base">大分県内（宇佐市以外）</h3>
+            <span class="text-sm font-bold text-indigo-700 bg-indigo-100 px-3 py-1 rounded-full">出張料 4,000円</span>
+          </div>
+          <p class="text-sm text-gray-600">大分市・別府市・中津市・日田市・佐伯市・臼杵市・津久見市・竹田市・豊後高田市・杵築市・豊後大野市・由布市・国東市・姫島村・日出町・九重町・玖珠町</p>
+        </div>
+
+        <!-- 隣接エリア -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border-l-4 border-gray-300">
+          <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+            <h3 class="font-bold text-gray-900 text-base">隣接エリア</h3>
+            <span class="text-sm font-bold text-gray-600 bg-gray-100 px-3 py-1 rounded-full">出張料 5,000円〜</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-gray-600">
+            <div>
+              <span class="font-medium text-gray-700">福岡県：</span>
+              赤村・朝倉市・うきは市・川崎町・久留米市・上毛町・添田町・築上町・東峰村・豊前市・八女市・行橋市・吉富町
+            </div>
+            <div>
+              <span class="font-medium text-gray-700">熊本県：</span>
+              阿蘇市・産山村・大津町・小国町・菊池市・高森町・西原村・南阿蘇村・南小国町・山鹿市
+            </div>
+            <div>
+              <span class="font-medium text-gray-700">宮崎県：</span>
+              高千穂町・延岡市・日之影町
+            </div>
+          </div>
         </div>
 
       </div>
+
+      <div class="bg-blue-100 border border-blue-200 rounded-xl p-4 mb-6">
+        <p class="text-blue-800 text-sm leading-relaxed font-medium text-center">
+          エリア外の方もまずはご相談ください。内容によっては対応できる場合があります。
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 max-w-sm mx-auto">
+        <a
+          href="/areas"
+          class="flex items-center justify-center gap-1 border border-blue-300 text-blue-700 hover:bg-blue-600 hover:text-white px-4 py-3 rounded-xl text-sm font-medium transition-colors"
+        >
+          エリア一覧を見る →
+        </a>
+        <a
+          href={PHONE_TEL}
+          class="flex items-center justify-center gap-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-xl text-sm font-bold transition-colors"
+          aria-label={`電話: ${PHONE}`}
+        >
+          電話で確認する
+        </a>
+      </div>
+
     </div>
   </section>
 
@@ -456,7 +469,7 @@ const blogCards = latestPosts.length > 0
           <p class="text-gray-500 text-sm mb-6">PCQQ パソコン訪問修理・出張サポート 代表</p>
 
           <p class="text-gray-700 leading-relaxed mb-6 text-base">
-            東京・杉並で生まれ育ち、2012年に別府へ。介護の現場でも仕事をした経験から、高齢の方がパソコンで困っている現実を知りました。2026年、宇佐市安心院町に拠点を移し、地域に根ざしたサポートを続けています。
+            東京・杉並で生まれ育ち、2012年に別府へ。パソコン修理の傍ら、介護の現場にも携わった経験から、高齢の方がパソコンで困っている現実を知りました。2026年、宇佐市安心院町に拠点を移し、地域に根ざしたサポートを続けています。
           </p>
 
           <blockquote class="border-l-4 border-blue-500 pl-5 py-1 mb-6 text-left" cite="/profile">

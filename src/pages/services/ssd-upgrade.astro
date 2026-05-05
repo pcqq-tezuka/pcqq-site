@@ -1,9 +1,102 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CallToAction from '../../components/CallToAction.astro';
 ---
-<PageLayout title="SSD換装">
-  <section>
-    <h1>SSD換装</h1>
-    <p>コンテンツをここに追加</p>
-  </section>
-</PageLayout>
+
+<Layout
+  title="SSD換装 | PCQQ パソコン修理"
+  description="古いHDDをSSDに交換して起動・動作を劇的に高速化。データ移行込みで対応。大分県宇佐市・別府・中津の出張パソコン修理PCQQへ。"
+>
+  <article class="max-w-3xl mx-auto px-4 py-10">
+
+    <Breadcrumb items={[
+      { label: 'ホーム', href: '/' },
+      { label: 'サービス一覧', href: '/services' },
+      { label: 'SSD換装' },
+    ]} />
+
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mt-3 mb-2">SSD換装</h1>
+    <p class="text-gray-500 mb-8">古いHDDをSSDに交換。起動・動作が劇的に速くなります</p>
+
+    <!-- Before/After -->
+    <div class="grid grid-cols-2 gap-4 mb-10">
+      <div class="bg-gray-100 rounded-2xl p-5 text-center">
+        <div class="text-3xl mb-2">🐢</div>
+        <div class="font-bold text-gray-500 mb-1">換装前（HDD）</div>
+        <div class="text-sm text-gray-500">起動: 5〜15分</div>
+        <div class="text-sm text-gray-500">操作: もっさり</div>
+      </div>
+      <div class="bg-blue-50 border-2 border-blue-300 rounded-2xl p-5 text-center">
+        <div class="text-3xl mb-2">🚀</div>
+        <div class="font-bold text-blue-700 mb-1">換装後（SSD）</div>
+        <div class="text-sm text-blue-600 font-medium">起動: 30秒〜1分</div>
+        <div class="text-sm text-blue-600 font-medium">操作: サクサク</div>
+      </div>
+    </div>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">SSD換装で解決できること</h2>
+      <ul class="space-y-2">
+        {[
+          '起動・シャットダウンが劇的に速くなる',
+          'ソフトの立ち上がりが速くなる',
+          'ファイルの保存・読み込みが速くなる',
+          'HDD特有のカリカリ音がなくなる',
+          '衝撃に強くなる（HDDは振動で壊れることがある）',
+        ].map(item => (
+          <li class="flex items-start gap-2 text-gray-700">
+            <span class="text-blue-500 mt-0.5 shrink-0">✓</span>{item}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="mb-10 bg-blue-50 rounded-2xl p-6">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">作業の流れ</h2>
+      <ol class="space-y-3">
+        {[
+          '現在のHDDのデータを丸ごとバックアップ',
+          'SSDにデータをクローン（コピー）',
+          'SSDに換装・動作確認',
+          'データ・設定がそのまま引き継がれていることを確認',
+        ].map((item, i) => (
+          <li class="flex items-start gap-3 text-gray-700">
+            <span class="bg-blue-600 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
+            {item}
+          </li>
+        ))}
+      </ol>
+      <p class="text-sm text-gray-500 mt-4">※ データはそのまま引き継ぎます。再インストール・設定し直しは不要です。</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">料金目安</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="text-left px-4 py-3 rounded-tl-lg font-bold text-gray-700">作業内容</th>
+              <th class="text-right px-4 py-3 rounded-tr-lg font-bold text-gray-700">目安料金</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ['SSD換装＋データ移行（別途SSD代）', '20,000円〜'],
+              ['SSD換装＋OS再インストール＋データ移行', '25,000円〜'],
+              ['出張費', '2,000円（宇佐市内）、その他の地域 4,000円～'],
+            ].map(([label, price], i) => (
+              <tr class={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                <td class="px-4 py-3 text-gray-700 border-t border-gray-100">{label}</td>
+                <td class="px-4 py-3 text-right font-medium text-gray-900 border-t border-gray-100">{price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs text-gray-400 mt-2">※ SSD容量・機種により異なります。まずはご相談ください。</p>
+    </section>
+
+    <CallToAction heading="新品を買う前にSSD換装を検討してみてください" subtext="買い替えより安く、新品同様の速さに。相談無料。" />
+  </article>
+</Layout>

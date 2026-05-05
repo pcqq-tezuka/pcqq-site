@@ -1,9 +1,154 @@
 ---
-import PageLayout from '../layouts/PageLayout.astro';
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import CallToAction from '../components/CallToAction.astro';
+
+const priceCategories = [
+  {
+    category: '修理・改善',
+    items: [
+      { label: 'システム修復・動作改善', price: '8,000円〜', note: 'OS修復・ドライバー修正など' },
+      { label: 'OS再インストール', price: '10,000円〜', note: 'データ移行込み' },
+      { label: 'SSD換装＋データ移行', price: '20,000円〜', note: 'SSD代込み' },
+      { label: '液晶パネル交換', price: '15,000円〜', note: 'パーツ代込み・機種により異なる' },
+    ],
+  },
+  {
+    category: 'データ',
+    items: [
+      { label: 'データ復旧（論理障害）', price: '10,000円〜', note: '復旧できなければ作業料なし' },
+      { label: 'OS起動不可からのデータ取り出し', price: '10,000円〜', note: '' },
+      { label: 'バックアップ環境構築', price: '5,000円〜', note: 'OneDrive・外付けHDDなど' },
+    ],
+  },
+  {
+    category: 'ネット・設定',
+    items: [
+      { label: 'ネット接続設定・トラブル解決', price: '5,000円〜', note: '' },
+      { label: 'メール設定（1アカウント）', price: '3,000円〜', note: 'Outlook・Thunderbirdなど' },
+      { label: 'プロバイダ変更・ルーター設定', price: '5,000円〜', note: '' },
+    ],
+  },
+  {
+    category: 'セキュリティ',
+    items: [
+      { label: 'ウイルス除去・セキュリティ強化', price: '8,000円〜', note: '' },
+      { label: 'セキュリティソフト導入・設定', price: '3,000円〜', note: '' },
+    ],
+  },
+  {
+    category: 'サポート',
+    items: [
+      { label: '基本操作サポート（1時間）', price: '3,000円〜', note: '高齢者・初心者向け' },
+      { label: 'Zoom・ビデオ通話設定', price: '5,000円〜', note: '' },
+      { label: 'デジタル遺品整理', price: '12,000円〜', note: 'データ取り出し・アカウント整理など' },
+    ],
+  },
+  {
+    category: 'その他',
+    items: [
+      { label: 'スターリンク設置・設定', price: '32,000円〜', note: '機器代別' },
+      { label: '防犯カメラ設置（1台）', price: '35,000円〜', note: '機器代別' },
+    ],
+  },
+];
 ---
-<PageLayout title="料金">
-  <section>
-    <h1>料金</h1>
-    <p>コンテンツをここに追加</p>
-  </section>
-</PageLayout>
+
+<Layout
+  title="料金表 | PCQQ パソコン修理"
+  description="PCQQのパソコン修理・サポート料金表。出張料金は宇佐市内2,000円・大分県内4,000円・隣接エリア5,000円〜。作業前に必ず見積もりをお伝えします。"
+>
+  <div class="max-w-3xl mx-auto px-4 py-10">
+
+    <Breadcrumb items={[
+      { label: 'ホーム', href: '/' },
+      { label: '料金表' },
+    ]} />
+
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mt-3 mb-2">料金表</h1>
+    <p class="text-gray-500 mb-8">作業前に必ず見積もりをお伝えします。納得いただいてから作業を開始します。</p>
+
+    <!-- 出張料金 -->
+    <section class="mb-10">
+      <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <span class="w-1 h-5 bg-blue-600 rounded-full inline-block"></span>
+        出張料金
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+        {[
+          {
+            area: '宇佐市内',
+            price: '2,000円',
+            detail: '駅館・四日市・長洲・安心院・院内ほか宇佐市全域',
+            color: 'bg-blue-50 border-blue-200',
+          },
+          {
+            area: '大分県内',
+            price: '4,000円',
+            detail: '大分市・別府市・中津市・豊後高田市・国東市ほか大分県全域',
+            color: 'bg-indigo-50 border-indigo-200',
+          },
+          {
+            area: '隣接エリア',
+            price: '5,000円〜',
+            detail: '福岡県・熊本県・宮崎県の一部地域',
+            color: 'bg-gray-50 border-gray-200',
+          },
+        ].map(item => (
+          <div class={`rounded-2xl border p-5 ${item.color}`}>
+            <div class="text-xs font-medium text-gray-500 mb-1">{item.area}</div>
+            <div class="text-2xl font-bold text-gray-900 mb-2">{item.price}</div>
+            <div class="text-xs text-gray-600 leading-relaxed">{item.detail}</div>
+          </div>
+        ))}
+      </div>
+      <div class="bg-gray-50 rounded-xl p-4 text-xs text-gray-600 space-y-1">
+        <p>・持込修理: 2,000円</p>
+        <p>・トラブル診断: 2,000円（原因が明らかな場合は不要）</p>
+        <p>・修理に複数日かかる場合でも出張料は1回分のみ</p>
+        <p>・隣接エリアの詳細は<a href="/areas" class="text-blue-600 hover:underline">対応エリアページ</a>をご覧ください</p>
+      </div>
+    </section>
+
+    <!-- 作業料金 -->
+    <div class="space-y-8">
+      {priceCategories.map(cat => (
+        <section>
+          <h2 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+            <span class="w-1 h-5 bg-blue-600 rounded-full inline-block"></span>
+            {cat.category}
+          </h2>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm border-collapse">
+              <tbody>
+                {cat.items.map((item, i) => (
+                  <tr class={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                    <td class="px-4 py-3 text-gray-700 border-t border-gray-100">
+                      {item.label}
+                      {item.note && (
+                        <span class="text-xs text-gray-400 ml-2">{item.note}</span>
+                      )}
+                    </td>
+                    <td class="px-4 py-3 text-right font-medium text-gray-900 border-t border-gray-100 whitespace-nowrap">
+                      {item.price}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <p class="text-xs text-gray-400 mt-6">
+      ※ 料金はすべて税込・目安です。機種・状態・作業内容により異なります。<br />
+      ※ 作業前に料金をご説明し、ご了承いただいてから作業を開始します。
+    </p>
+
+    <div class="mt-10">
+      <CallToAction heading="料金が気になる方はまずご相談を" subtext="見積もり無料。納得いただいてから作業します。" />
+    </div>
+
+  </div>
+</Layout>

@@ -1,0 +1,116 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CallToAction from '../../components/CallToAction.astro';
+---
+
+<Layout
+  title="宇佐市のパソコン修理・出張サポート | PCQQ"
+  description="宇佐市全域のパソコン出張修理。出張料2,000円。駅館・四日市・長洲・安心院・院内ほか宇佐市全域に対応。最短当日対応。PCQQへお気軽にご相談ください。"
+>
+  <article class="max-w-3xl mx-auto px-4 py-10">
+
+    <Breadcrumb items={[
+      { label: 'ホーム', href: '/' },
+      { label: '出張対応エリア', href: '/areas' },
+      { label: '宇佐市' },
+    ]} />
+
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mt-3 mb-2">
+      宇佐市のパソコン修理・出張サポート
+    </h1>
+    <p class="text-gray-500 mb-8">宇佐市安心院町を拠点に、宇佐市全域で出張修理を行っています</p>
+
+    <div class="bg-blue-50 rounded-2xl p-5 mb-8 flex items-center gap-4">
+      <span class="text-3xl shrink-0">📍</span>
+      <div>
+        <div class="font-bold text-blue-800">出張料: 2,000円（宇佐市内一律）</div>
+        <div class="text-sm text-blue-700">駅館・四日市・長洲・安心院・院内ほか宇佐市全域に伺います。</div>
+      </div>
+    </div>
+
+    <!-- 最短当日対応 -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">最短当日対応</h2>
+      <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+        <p class="text-gray-700 leading-relaxed text-sm">
+          電話一本で、最短30分でお伺いします。<br />
+          作業内容に応じてその場で見積り、ご納得いただいた上で修理を開始。<br />
+          「急いでいる」「今日中に直したい」という場合はお気軽にお電話ください。
+        </p>
+      </div>
+    </section>
+
+    <!-- 対応地区 -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">対応地区</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        {[
+          { href: '/areas/ajimu',     label: '安心院エリア', desc: '安心院町・山間部' },
+          { href: '/areas/innai',     label: '院内エリア',   desc: '院内町・石橋の里' },
+          { href: '/areas/nagasu',    label: '長洲エリア',   desc: '豊前海沿岸' },
+          { href: '/areas/yakkan',    label: '駅館エリア',   desc: 'JR宇佐駅・宇佐神宮周辺' },
+          { href: '/areas/yokkaichi', label: '四日市エリア', desc: '宇佐市中心部' },
+        ].map(a => (
+          <a
+            href={a.href}
+            class="bg-white border border-gray-100 rounded-xl p-4 hover:shadow-md hover:border-blue-200 transition-all group"
+          >
+            <div class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors text-sm mb-0.5">{a.label}</div>
+            <div class="text-xs text-gray-500">{a.desc}</div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- よくあるご依頼 -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">宇佐市でよくあるご依頼</h2>
+      <ul class="space-y-2">
+        {[
+          'パソコンが起動しない・ブルースクリーンが出る',
+          'インターネットが繋がらなくなった',
+          '動作が遅い・固まる（SSD換装で改善可能）',
+          'ウイルス感染・サポート詐欺の被害',
+          '高齢のご家族のパソコン相談',
+          '山間部での衛星インターネット（スターリンク）設置',
+        ].map(item => (
+          <li class="flex items-start gap-2 text-gray-700 text-sm">
+            <span class="text-blue-500 mt-0.5 shrink-0">✓</span>{item}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- 料金目安 -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">宇佐市内の出張料金</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="text-left px-4 py-3 rounded-tl-lg font-bold text-gray-700">内容</th>
+              <th class="text-right px-4 py-3 rounded-tr-lg font-bold text-gray-700">目安料金</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ['出張料', '2,000円'],
+              ['トラブル診断', '2,000円（原因が明らかな場合は不要）'],
+              ['修理・設定（内容による）', '3,000円〜'],
+              ['部品代', '必要な場合のみ'],
+            ].map(([label, price], i) => (
+              <tr class={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                <td class="px-4 py-3 text-gray-700 border-t border-gray-100">{label}</td>
+                <td class="px-4 py-3 text-right font-medium text-gray-900 border-t border-gray-100">{price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs text-gray-400 mt-2">※すべて作業前にお見積りをご提示します</p>
+    </section>
+
+    <CallToAction heading="宇佐市のパソコントラブルはPCQQへ" subtext="相談無料。まずお電話またはLINEでご連絡ください。" />
+  </article>
+</Layout>

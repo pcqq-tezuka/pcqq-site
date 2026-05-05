@@ -1,9 +1,97 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CallToAction from '../../components/CallToAction.astro';
 ---
-<PageLayout title="スターリンク導入">
-  <section>
-    <h1>スターリンク導入</h1>
-    <p>コンテンツをここに追加</p>
-  </section>
-</PageLayout>
+
+<Layout
+  title="スターリンク（Starlink）導入サポート | PCQQ パソコン修理"
+  description="光回線が来ていない山間部・農村部でも高速インターネット。スターリンクの機器設置から初期設定まで出張対応。大分県宇佐市・院内・安心院エリア対応。"
+>
+  <article class="max-w-3xl mx-auto px-4 py-10">
+
+    <Breadcrumb items={[
+      { label: 'ホーム', href: '/' },
+      { label: 'サービス一覧', href: '/services' },
+      { label: 'スターリンク導入' },
+    ]} />
+
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mt-3 mb-2">スターリンク（Starlink）導入サポート</h1>
+    <p class="text-gray-500 mb-8">田舎でも高速ネット。設置から設定まで出張対応します</p>
+
+    <!-- スターリンクとは -->
+    <section class="mb-10 bg-indigo-50 rounded-2xl p-6">
+      <h2 class="text-xl font-bold text-gray-900 mb-3">スターリンクとは？</h2>
+      <p class="text-gray-700 leading-relaxed text-sm">
+        SpaceX社が運営する衛星インターネットサービスです。低軌道衛星を使うため、
+        光回線が届かない山間部・農村部でも<strong>下り100〜300Mbps</strong>程度の高速通信が可能です。
+        宇佐市の院内・安心院地区など、これまでネットが遅かった地域でも快適なインターネットが使えます。
+      </p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">こんな方におすすめ</h2>
+      <ul class="space-y-2">
+        {[
+          '光回線が来ていない・工事できない場所に住んでいる',
+          '現在のネットが遅くて動画・Zoomが使えない',
+          '農業・林業など山間部で仕事をしている',
+          '別荘・離れ屋・倉庫にもネットを引きたい',
+        ].map(item => (
+          <li class="flex items-start gap-2 text-gray-700">
+            <span class="text-indigo-500 mt-0.5 shrink-0">✓</span>{item}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">PCQQのサポート内容</h2>
+      <ol class="space-y-3">
+        {[
+          'ご自宅の環境確認・最適な設置場所の検討',
+          'アンテナ（ディッシュ）の取り付け・設置',
+          'ルーターとパソコン・スマホの接続設定',
+          '通信速度の確認・動作テスト',
+          '使い方の説明（アプリの見方・障害確認など）',
+        ].map((item, i) => (
+          <li class="flex items-start gap-3 text-gray-700">
+            <span class="bg-indigo-600 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
+            {item}
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">料金目安</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="text-left px-4 py-3 rounded-tl-lg font-bold text-gray-700">内容</th>
+              <th class="text-right px-4 py-3 rounded-tr-lg font-bold text-gray-700">目安料金</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ['設置・設定サポート（機器代別）', '8,000円〜'],
+              ['スターリンク機器代（目安）', '約70,000円（初期）'],
+              ['アンテナ取付け工事', '24,000円～'],
+              ['月額通信費（目安）', '約7,300円/月'],
+              ['出張費', '2,000円（宇佐市内）、その他の地域 4,000円～'],
+            ].map(([label, price], i) => (
+              <tr class={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                <td class="px-4 py-3 text-gray-700 border-t border-gray-100">{label}</td>
+                <td class="px-4 py-3 text-right font-medium text-gray-900 border-t border-gray-100">{price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs text-gray-400 mt-2">※ 機器代・月額は変動します。最新情報はStarlink公式サイトをご確認ください。</p>
+    </section>
+
+    <CallToAction heading="ネットが遅くてお困りの方へ" subtext="スターリンクで解決できるか、まずご相談ください。" />
+  </article>
+</Layout>

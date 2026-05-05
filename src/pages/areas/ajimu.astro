@@ -1,9 +1,99 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CallToAction from '../../components/CallToAction.astro';
 ---
-<PageLayout title="安心院町のパソコン修理">
-  <section>
-    <h1>安心院町のパソコン修理</h1>
-    <p>コンテンツをここに追加</p>
-  </section>
-</PageLayout>
+
+<Layout
+  title="宇佐市安心院町のパソコン修理 | PCQQ"
+  description="宇佐市安心院町のパソコン出張修理。出張料2,000円。起動しない・遅い・ネット設定・スターリンク導入も対応。PCQQへお気軽にご相談ください。"
+>
+  <article class="max-w-3xl mx-auto px-4 py-10">
+
+    <Breadcrumb items={[
+      { label: 'ホーム', href: '/' },
+      { label: '出張対応エリア', href: '/areas' },
+      { label: '宇佐市（安心院）' },
+    ]} />
+
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mt-3 mb-2">
+      宇佐市（安心院町）のパソコン修理
+    </h1>
+    <p class="text-gray-500 mb-8">ぶどう・温泉の里、安心院町へ出張します</p>
+
+    <div class="bg-blue-50 rounded-2xl p-5 mb-8 flex items-center gap-4">
+      <span class="text-3xl shrink-0">📍</span>
+      <div>
+        <div class="font-bold text-blue-800">出張料: 2,000円</div>
+        <div class="text-sm text-blue-700">宇佐市内は一律2,000円。安心院町・山間部のご自宅にもお伺いします。</div>
+      </div>
+    </div>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">安心院エリアでよくあるご相談</h2>
+      <ul class="space-y-2">
+        {[
+          '光回線が来ていない・ネットが遅い（スターリンク導入もご相談を）',
+          'パソコンが古くなって起動が遅い（SSD換装で改善できます）',
+          '親のパソコンの設定・使い方サポート',
+          'ウイルス・偽警告の対処',
+          'データ復旧・大切な写真の取り出し',
+        ].map(item => (
+          <li class="flex items-start gap-2 text-gray-700">
+            <span class="text-blue-500 mt-0.5 shrink-0">✓</span>{item}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">対応できる全サービス</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {[
+          '起動しない・画面が映らない',
+          'パソコンが遅い・フリーズする',
+          'ウイルス・偽警告の対処',
+          'データ復旧・バックアップ',
+          'ネット・Wi-Fi設定',
+          'メール設定',
+          'SSD換装・高速化',
+          '液晶パネル交換',
+          '高齢者向けサポート',
+          'スターリンク導入',
+        ].map(item => (
+          <div class="flex items-center gap-2 bg-gray-50 rounded-xl px-4 py-2.5 text-sm text-gray-700">
+            <span class="text-blue-500 shrink-0">✓</span>{item}
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">料金目安</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="text-left px-4 py-3 rounded-tl-lg font-bold text-gray-700">内容</th>
+              <th class="text-right px-4 py-3 rounded-tr-lg font-bold text-gray-700">目安料金</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ['出張料', '2,000円'],
+              ['トラブル診断', '2,000円（原因が明らかな場合は不要）'],
+              ['修理・設定（内容による）', '3,000円〜'],
+            ].map(([label, price], i) => (
+              <tr class={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                <td class="px-4 py-3 text-gray-700 border-t border-gray-100">{label}</td>
+                <td class="px-4 py-3 text-right font-medium text-gray-900 border-t border-gray-100">{price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <CallToAction heading="安心院町のパソコントラブルはPCQQへ" subtext="相談無料。まずお電話またはLINEでご連絡ください。" />
+  </article>
+</Layout>

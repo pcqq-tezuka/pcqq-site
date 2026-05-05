@@ -1,24 +1,152 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
-
-const areas = [
-  { href: '/areas/ajimu', label: '安心院町' },
-  { href: '/areas/innai', label: '院内町' },
-  { href: '/areas/yokkaichi', label: '四日市' },
-  { href: '/areas/nagasu', label: '長洲' },
-  { href: '/areas/ekikan', label: '駅館' },
-  { href: '/areas/bungotakada', label: '豊後高田市' },
-  { href: '/areas/nakatsu', label: '中津市' },
-  { href: '/areas/beppu', label: '別府市' },
-];
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CallToAction from '../../components/CallToAction.astro';
 ---
-<PageLayout title="エリアから探す">
-  <section>
-    <h1>エリアから探す</h1>
-    <ul>
-      {areas.map(a => (
-        <li><a href={a.href}>{a.label}</a></li>
-      ))}
-    </ul>
-  </section>
-</PageLayout>
+
+<Layout
+  title="出張対応エリア | PCQQ パソコン修理"
+  description="PCQQの出張対応エリア一覧。宇佐市内2,000円・大分県内4,000円・隣接エリア(福岡・熊本・宮崎)5,000円〜。大分県全域＋隣接県の一部へ出張修理に伺います。"
+>
+  <div class="max-w-4xl mx-auto px-4 py-10">
+
+    <Breadcrumb items={[
+      { label: 'ホーム', href: '/' },
+      { label: '出張対応エリア' },
+    ]} />
+
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-3">出張対応エリア</h1>
+    <p class="text-gray-500 mb-10">宇佐市を中心に、大分県全域と隣接県の一部へ出張します。<br class="hidden sm:inline" />詳しい対応地域と出張料金は下記の通りです。</p>
+
+    <!-- 宇佐市内 -->
+    <section class="mb-12">
+      <div class="flex items-center gap-3 mb-5">
+        <h2 class="text-lg font-bold text-gray-900">宇佐市内</h2>
+        <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">出張料 2,000円</span>
+      </div>
+
+      <!-- 宇佐市全体ハブ -->
+      <a
+        href="/areas/usa"
+        class="flex items-center justify-between bg-blue-50 border border-blue-200 rounded-2xl p-6 mb-4 hover:bg-blue-100 hover:border-blue-300 transition-all group"
+      >
+        <div>
+          <div class="text-xs font-medium text-blue-600 mb-1">宇佐市全域</div>
+          <div class="text-xl font-bold text-gray-900 group-hover:text-blue-700 transition-colors">宇佐市のパソコン修理・出張サポート</div>
+          <div class="text-sm text-gray-600 mt-1">駅館・四日市・長洲・安心院・院内ほか宇佐市全域</div>
+        </div>
+        <svg class="w-5 h-5 text-blue-400 shrink-0 ml-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+        </svg>
+      </a>
+
+      <!-- 地区別5カード -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+        {[
+          { href: '/areas/ajimu',     label: '安心院エリア', desc: '安心院町・山間部エリア' },
+          { href: '/areas/innai',     label: '院内エリア',   desc: '院内町・石橋の里' },
+          { href: '/areas/nagasu',    label: '長洲エリア',   desc: '豊前海沿岸・長洲地区' },
+          { href: '/areas/yakkan',    label: '駅館エリア',   desc: 'JR宇佐駅・宇佐神宮周辺' },
+          { href: '/areas/yokkaichi', label: '四日市エリア', desc: '宇佐市中心部・四日市周辺' },
+        ].map(a => (
+          <a
+            href={a.href}
+            class="bg-white border border-gray-100 rounded-xl p-4 hover:shadow-md hover:border-blue-200 transition-all group"
+          >
+            <div class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors text-sm mb-0.5">{a.label}</div>
+            <div class="text-xs text-gray-500">{a.desc}</div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- 大分県内 -->
+    <section class="mb-12">
+      <div class="flex items-center gap-3 mb-5">
+        <h2 class="text-lg font-bold text-gray-900">大分県内</h2>
+        <span class="bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full">出張料 4,000円</span>
+      </div>
+
+      <!-- 個別ページありカード -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+        {[
+          { href: '/areas/oita',        label: '大分市',     desc: '県庁所在地・大分市全域' },
+          { href: '/areas/beppu',       label: '別府市',     desc: '別府・亀川・石垣周辺' },
+          { href: '/areas/nakatsu',     label: '中津市',     desc: '中津・耶馬溪・本耶馬渓' },
+          { href: '/areas/bungotakada', label: '豊後高田市', desc: '昭和の街・豊後高田' },
+          { href: '/areas/kunisaki',    label: '国東市',     desc: '国東半島・国見・安岐' },
+        ].map(a => (
+          <a
+            href={a.href}
+            class="flex items-center justify-between bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-indigo-200 transition-all group"
+          >
+            <div>
+              <div class="font-bold text-gray-900 group-hover:text-indigo-600 transition-colors mb-1">{a.label}</div>
+              <div class="text-sm text-gray-500">{a.desc}</div>
+            </div>
+            <svg class="w-4 h-4 text-gray-400 shrink-0 ml-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        ))}
+      </div>
+
+      <!-- テキストリスト -->
+      <div class="bg-gray-50 rounded-xl p-5 text-sm text-gray-600">
+        <p class="font-medium text-gray-700 mb-2">以下の市町村も出張対応しています</p>
+        <p class="leading-relaxed text-xs">
+          杵築市・臼杵市・佐伯市・竹田市・津久見市・豊後大野市・由布市・日出町・九重町・玖珠町・日田市・姫島村
+        </p>
+        <p class="text-xs text-gray-400 mt-2">お電話・LINE・メールでご相談ください。</p>
+      </div>
+    </section>
+
+    <!-- 隣接エリア -->
+    <section class="mb-12">
+      <div class="flex items-center gap-3 mb-5">
+        <h2 class="text-lg font-bold text-gray-900">隣接エリア</h2>
+        <span class="bg-gray-100 text-gray-600 text-xs font-bold px-3 py-1 rounded-full">出張料 5,000円〜</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {[
+          {
+            href: '/areas/fukuoka',
+            label: '福岡県の対応地域',
+            desc: '行橋市・豊前市・朝倉市・久留米市ほか13市町村',
+          },
+          {
+            href: '/areas/kumamoto',
+            label: '熊本県の対応地域',
+            desc: '阿蘇市・小国町・菊池市・山鹿市ほか10市町村',
+          },
+          {
+            href: '/areas/miyazaki',
+            label: '宮崎県の対応地域',
+            desc: '延岡市・高千穂町・日之影町',
+          },
+        ].map(a => (
+          <a
+            href={a.href}
+            class="flex flex-col bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-gray-300 transition-all group"
+          >
+            <div class="font-bold text-gray-900 group-hover:text-gray-700 transition-colors mb-2">{a.label}</div>
+            <div class="text-xs text-gray-500 leading-relaxed">{a.desc}</div>
+            <div class="mt-3 text-xs text-gray-400 flex items-center gap-1">
+              詳細を見る
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <CallToAction
+      heading="エリア外でもまずご相談を"
+      subtext="記載のないエリアも対応できる場合があります。お気軽にどうぞ。"
+    />
+
+  </div>
+</Layout>

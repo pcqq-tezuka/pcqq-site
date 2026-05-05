@@ -1,9 +1,133 @@
 ---
-import PageLayout from '../layouts/PageLayout.astro';
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import CallToAction from '../components/CallToAction.astro';
+
+const faqs = [
+  {
+    category: '料金・費用',
+    items: [
+      {
+        q: '出張費はかかりますか？',
+        a: '宇佐市内は2,000円頂いています。宇佐以外の大分県内は4,000円、隣接県は5,000円～対応しています。それ以外の地域についてはご相談ください。',
+      },
+      {
+        q: '相談・診断だけでも料金はかかりますか？',
+        a: '相談・診断は無料です。修理しないことになっても一切料金はいただきません。',
+      },
+      {
+        q: '修理できなかった場合も料金はかかりますか？',
+        a: 'かかりません。直せなかった場合は診断料も含めて無料です。',
+      },
+      {
+        q: '料金の目安を教えてください。',
+        a: '作業内容によって異なります。詳しくは料金表をご覧ください。作業前に必ず見積もりをお伝えし、ご了承いただいてから作業を開始します。',
+      },
+    ],
+  },
+  {
+    category: '修理・対応について',
+    items: [
+      {
+        q: '当日対応は可能ですか？',
+        a: 'スケジュールによりますが、できる限り対応します。まずはお電話またはLINEでご連絡ください。',
+      },
+      {
+        q: 'どんなメーカーでも対応できますか？',
+        a: 'Windows PCであればメーカーを問わず対応できます（富士通・NEC・東芝・Dynabook・Lenovo・Dell・HPなど）。Macは専門の業者をご紹介できます。',
+      },
+      {
+        q: 'データはそのまま残りますか？',
+        a: '可能な限りデータを保持したまま修理します。OS再インストールが必要な場合も、事前にバックアップを取ってから作業します。',
+      },
+      {
+        q: 'パソコンを持ち込む必要はありますか？',
+        a: 'PCQQは出張専門です。お客様のご自宅や職場へ直接伺います。持ち込みは不要です。',
+      },
+    ],
+  },
+  {
+    category: 'サポート詐欺・ウイルス',
+    items: [
+      {
+        q: '「Microsoftに電話してください」という画面が出ました。どうすればいいですか？',
+        a: '絶対に電話しないでください。これはサポート詐欺と呼ばれる偽の警告です。パソコンの電源を切ってから、PCQQにご連絡ください。',
+      },
+      {
+        q: '警告の電話番号に電話してしまいました。どうすればいいですか？',
+        a: '今すぐインターネットを切断（Wi-FiをOFF）し、遠隔操作ソフトが入っていないか確認が必要です。銀行口座や個人情報を入力した場合は金融機関にも連絡してください。PCQQに連絡いただければ安全確認を行います。',
+      },
+    ],
+  },
+  {
+    category: 'その他',
+    items: [
+      {
+        q: 'スマートフォンの修理や設定も対応していますか？',
+        a: '修理は対応していませんが、Wi-Fi接続・メール設定・データ移行などの設定サポートは対応可能です。また専門の業者をご紹介できます',
+      },
+      {
+        q: '法人・事業所のパソコンも対応できますか？',
+        a: 'はい、個人・法人問わず対応しています。複数台の設定やネットワーク構築もご相談ください。',
+      },
+      {
+        q: 'Windows 10のサポートが終了しましたが、どうすればいいですか？',
+        a: 'Windows 10のサポートは2025年10月に終了しました。Windows 11にアップグレードできる機種かどうかの確認から、アップグレード作業、買い替えのアドバイスまでサポートします。',
+      },
+    ],
+  },
+];
 ---
-<PageLayout title="よくある質問">
-  <section>
-    <h1>よくある質問</h1>
-    <p>コンテンツをここに追加</p>
-  </section>
-</PageLayout>
+
+<Layout
+  title="よくある質問 | PCQQ パソコン修理"
+  description="PCQQパソコン修理のよくある質問。料金・出張費・対応エリア・データ保護・サポート詐欺への対処など。大分県宇佐市のパソコン修理屋PCQQへ。"
+>
+  <div class="max-w-3xl mx-auto px-4 py-10">
+
+    <Breadcrumb items={[
+      { label: 'ホーム', href: '/' },
+      { label: 'よくある質問' },
+    ]} />
+
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mt-3 mb-2">よくある質問</h1>
+    <p class="text-gray-500 mb-10">よくいただくご質問をまとめました。</p>
+
+    <div class="space-y-10">
+      {faqs.map(section => (
+        <section>
+          <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <span class="w-1 h-5 bg-blue-600 rounded-full inline-block"></span>
+            {section.category}
+          </h2>
+          <div class="space-y-3">
+            {section.items.map(item => (
+              <details class="group bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
+                <summary class="flex items-start justify-between gap-3 px-5 py-4 cursor-pointer list-none">
+                  <span class="font-medium text-gray-800 text-sm leading-relaxed">
+                    <span class="text-blue-600 font-bold mr-2">Q.</span>{item.q}
+                  </span>
+                  <svg
+                    class="w-5 h-5 text-gray-400 shrink-0 mt-0.5 transition-transform group-open:rotate-180"
+                    fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24" aria-hidden="true"
+                  >
+                    <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </summary>
+                <div class="px-5 pb-4 text-sm text-gray-600 leading-relaxed border-t border-gray-50">
+                  <span class="text-green-600 font-bold mr-2">A.</span>{item.a}
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <div class="mt-12">
+      <CallToAction heading="他にご不明な点はお気軽にどうぞ" subtext="電話・LINEでご相談ください。相談無料です。" />
+    </div>
+
+  </div>
+</Layout>

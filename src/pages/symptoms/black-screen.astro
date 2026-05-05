@@ -1,9 +1,114 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CallToAction from '../../components/CallToAction.astro';
 ---
-<PageLayout title="画面が真っ黒になった">
-  <section>
-    <h1>画面が真っ黒になった</h1>
-    <p>コンテンツをここに追加</p>
-  </section>
-</PageLayout>
+
+<Layout
+  title="画面が真っ黒になった | PCQQ パソコン修理"
+  description="パソコンの電源は入るのに画面が映らない・真っ暗なまま。原因と対処法を大分県宇佐市のパソコン修理屋PCQQが解説。出張修理・相談無料。"
+>
+  <article class="max-w-3xl mx-auto px-4 py-10">
+
+    <Breadcrumb items={[
+      { label: 'ホーム', href: '/' },
+      { label: '困った症状から探す', href: '/symptoms' },
+      { label: '画面が真っ黒になった' },
+    ]} />
+
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mt-3 mb-2">
+      画面が真っ黒になった
+    </h1>
+    <p class="text-gray-500 mb-8">電源は入るのに画面が映らない・真っ暗なまま</p>
+
+    <!-- こんな状態ではありませんか？ -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">こんな状態ではありませんか？</h2>
+      <ul class="space-y-2">
+        {[
+          '電源ボタンを押すと起動音はするのに画面が映らない',
+          'Windowsのロゴが出た後、真っ黒になって止まる',
+          '作業中に突然画面が消えてしまった',
+          '電源LEDは点灯しているのに何も表示されない',
+          'ノートパソコンの液晶が暗くて見えない',
+        ].map(item => (
+          <li class="flex items-start gap-2 text-gray-700">
+            <span class="text-blue-500 mt-0.5 shrink-0">✓</span>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- 考えられる原因 -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">考えられる原因</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {[
+          { title: '液晶パネルの故障', desc: 'ノートPCで多い。バックライト切れや液晶割れにより画面が映らなくなる。' },
+          { title: 'グラフィックドライバーの不具合', desc: 'Windows更新後などに発生しやすい。セーフモードでは映ることも。' },
+          { title: 'HDD/SSDの故障', desc: 'ストレージが壊れるとOSが起動できず黒画面で止まる。' },
+          { title: 'メモリの接触不良', desc: 'メモリが外れかけていると起動時に黒画面になることがある。' },
+        ].map(item => (
+          <div class="bg-gray-50 rounded-xl p-4">
+            <div class="font-bold text-gray-800 mb-1">{item.title}</div>
+            <div class="text-sm text-gray-600 leading-relaxed">{item.desc}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- PCQQの対応 -->
+    <section class="mb-10 bg-blue-50 rounded-2xl p-6">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">PCQQの対応</h2>
+      <ol class="space-y-3">
+        {[
+          '出張してその場で診断。原因を特定します。',
+          '液晶交換・グラフィック修復・OS再インストールなど症状に合わせた修理を行います。',
+          'データが心配な方は、修理前にバックアップを取ることも可能です。',
+          '修理できない場合は費用をいただきません（診断料も無料）。',
+        ].map((item, i) => (
+          <li class="flex items-start gap-3 text-gray-700">
+            <span class="bg-blue-600 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
+            {item}
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- 料金目安 -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">料金目安</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="text-left px-4 py-3 rounded-tl-lg font-bold text-gray-700">修理内容</th>
+              <th class="text-right px-4 py-3 rounded-tr-lg font-bold text-gray-700">目安料金</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ['OS・ドライバー修復', '8,000円〜'],
+              ['液晶パネル交換（部品代は別）', '10,000円〜'],
+              ['HDD/SSD交換＋OS再インストール（部品代は別）', '15,000円〜'],
+              ['出張費', '2,000円（宇佐市内）、その他の地域 4,000円～'],
+            ].map(([label, price], i) => (
+              <tr class={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                <td class="px-4 py-3 text-gray-700 border-t border-gray-100">{label}</td>
+                <td class="px-4 py-3 text-right font-medium text-gray-900 border-t border-gray-100">{price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs text-gray-400 mt-2">※ 機種・状態により異なります。まずはご相談ください。</p>
+    </section>
+
+    <CallToAction
+      heading="画面が映らなくてもまずご連絡を"
+      subtext="出張診断無料。その場で原因をお伝えします。"
+    />
+
+  </article>
+</Layout>

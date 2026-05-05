@@ -1,24 +1,101 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CallToAction from '../../components/CallToAction.astro';
 
 const symptoms = [
-  { href: '/symptoms/black-screen', label: '画面が真っ黒になった' },
-  { href: '/symptoms/fake-alert', label: '変な警告が出た' },
-  { href: '/symptoms/wont-start', label: '起動しない' },
-  { href: '/symptoms/slow-freezing', label: '遅い・固まる' },
-  { href: '/symptoms/no-internet', label: 'ネットが繋がらない' },
-  { href: '/symptoms/lost-photos', label: '写真・データが消えた' },
-  { href: '/symptoms/parents-pc', label: '親のPC・高齢者サポート' },
-  { href: '/symptoms/replace-or-repair', label: '買い替えか修理か迷っている' },
+  {
+    href: '/symptoms/black-screen',
+    icon: '🖥️',
+    label: '画面が真っ黒になった',
+    desc: '電源は入るのに画面が映らない・真っ暗なまま',
+  },
+  {
+    href: '/symptoms/fake-alert',
+    icon: '⚠️',
+    label: '変な警告が出た',
+    desc: '「ウイルスに感染しました」などの警告画面が消えない',
+  },
+  {
+    href: '/symptoms/wont-start',
+    icon: '🔴',
+    label: '電源を入れても起動しない',
+    desc: 'Windowsが立ち上がらない・ロゴで止まってしまう',
+  },
+  {
+    href: '/symptoms/slow-freezing',
+    icon: '🐢',
+    label: '動きが遅い・固まる',
+    desc: '起動に時間がかかる・操作中にフリーズする',
+  },
+  {
+    href: '/symptoms/no-internet',
+    icon: '📶',
+    label: 'ネットが繋がらない',
+    desc: 'Wi-Fiが繋がらない・急にインターネットが使えなくなった',
+  },
+  {
+    href: '/symptoms/lost-photos',
+    icon: '📷',
+    label: '写真・データが消えた',
+    desc: '大切な写真や書類が突然なくなってしまった',
+  },
+  {
+    href: '/symptoms/parents-pc',
+    icon: '👴',
+    label: '親のPC・高齢者サポート',
+    desc: '操作がわからない・設定を手伝ってほしい',
+  },
+  {
+    href: '/symptoms/replace-or-repair',
+    icon: '🤔',
+    label: '修理か買い替えか迷っている',
+    desc: 'まずは相談。正直にアドバイスします',
+  },
 ];
 ---
-<PageLayout title="困った症状から探す">
-  <section>
-    <h1>困った症状から探す</h1>
-    <ul>
+
+<Layout
+  title="困った症状から探す | PCQQ パソコン修理"
+  description="画面が映らない・起動しない・ウイルス警告・データ消失など、パソコンのトラブル症状から修理方法を探せます。大分県宇佐市・別府・中津の出張修理はPCQQへ。"
+>
+  <div class="max-w-4xl mx-auto px-4 py-10">
+
+    <Breadcrumb items={[
+      { label: 'ホーム', href: '/' },
+      { label: '困った症状から探す' },
+    ]} />
+
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-3">
+      困った症状から探す
+    </h1>
+    <p class="text-gray-500 mb-10">
+      あなたのパソコンの症状をクリックしてください。原因と対処法をご説明します。
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {symptoms.map(s => (
-        <li><a href={s.href}>{s.label}</a></li>
+        <a
+          href={s.href}
+          class="flex items-start gap-4 bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-blue-200 transition-all group"
+        >
+          <span class="text-3xl shrink-0 mt-0.5">{s.icon}</span>
+          <div>
+            <div class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
+              {s.label}
+            </div>
+            <div class="text-sm text-gray-500 leading-relaxed">{s.desc}</div>
+          </div>
+        </a>
       ))}
-    </ul>
-  </section>
-</PageLayout>
+    </div>
+
+    <div class="mt-12">
+      <CallToAction
+        heading="症状がわからなくてもOK"
+        subtext="「なんか変だな」という段階でもお気軽にご相談ください。"
+      />
+    </div>
+
+  </div>
+</Layout>

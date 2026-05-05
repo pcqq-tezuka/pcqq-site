@@ -1,9 +1,85 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CallToAction from '../../components/CallToAction.astro';
 ---
-<PageLayout title="防犯カメラ設置">
-  <section>
-    <h1>防犯カメラ設置</h1>
-    <p>コンテンツをここに追加</p>
-  </section>
-</PageLayout>
+
+<Layout
+  title="防犯カメラ設置 | PCQQ パソコン修理"
+  description="自宅・店舗・農地の防犯カメラ設置。スマホからリモート確認も可能。機器選定から取り付け・設定まで出張対応。大分県宇佐市のPCQQへ。"
+>
+  <article class="max-w-3xl mx-auto px-4 py-10">
+
+    <Breadcrumb items={[
+      { label: 'ホーム', href: '/' },
+      { label: 'サービス一覧', href: '/services' },
+      { label: '防犯カメラ設置' },
+    ]} />
+
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mt-3 mb-2">防犯カメラ設置</h1>
+    <p class="text-gray-500 mb-8">自宅・店舗・農地の防犯対策をトータルサポートします</p>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">こんな方におすすめ</h2>
+      <ul class="space-y-2">
+        {[
+          '空き巣・不審者が心配で防犯カメラを付けたい',
+          '農作物・農機具の盗難が増えている',
+          '店舗の出入口や駐車場を監視したい',
+          '留守中の自宅をスマホで確認したい',
+          '既存のカメラが古くなったので新しくしたい',
+        ].map(item => (
+          <li class="flex items-start gap-2 text-gray-700">
+            <span class="text-blue-500 mt-0.5 shrink-0">✓</span>{item}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">PCQQのサポート内容</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {[
+          { title: '機器選定・ご提案', desc: '設置場所・用途・予算に合ったカメラとレコーダーをご提案します。' },
+          { title: 'カメラ取り付け', desc: '玄関・駐車場・農地など屋外・屋内問わず取り付けます。' },
+          { title: 'ネットワーク設定', desc: 'スマホからリモートで映像を確認できるよう設定します。' },
+          { title: '使い方レクチャー', desc: '録画の確認方法・スマホアプリの使い方をわかりやすく説明します。' },
+        ].map(item => (
+          <div class="bg-gray-50 rounded-xl p-4">
+            <div class="font-bold text-gray-800 mb-1">{item.title}</div>
+            <div class="text-sm text-gray-600 leading-relaxed">{item.desc}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">料金目安</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="text-left px-4 py-3 rounded-tl-lg font-bold text-gray-700">内容</th>
+              <th class="text-right px-4 py-3 rounded-tr-lg font-bold text-gray-700">目安料金</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ['設置工事費（1台）', '35,000円〜'],
+              ['カメラ・レコーダー機器代', '別途（ご相談）'],
+              ['出張費', '2,000円（宇佐市内）、その他の地域 4,000円～'],
+            ].map(([label, price], i) => (
+              <tr class={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                <td class="px-4 py-3 text-gray-700 border-t border-gray-100">{label}</td>
+                <td class="px-4 py-3 text-right font-medium text-gray-900 border-t border-gray-100">{price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs text-gray-400 mt-2">※ 台数・設置環境により異なります。まずはご相談ください。</p>
+    </section>
+
+    <CallToAction heading="防犯カメラの設置はPCQQへ" subtext="機器選定から設置・設定まで一括対応。相談無料。" />
+  </article>
+</Layout>

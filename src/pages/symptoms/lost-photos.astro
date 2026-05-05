@@ -1,9 +1,128 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CallToAction from '../../components/CallToAction.astro';
 ---
-<PageLayout title="写真・データが消えた">
-  <section>
-    <h1>写真・データが消えた</h1>
-    <p>コンテンツをここに追加</p>
-  </section>
-</PageLayout>
+
+<Layout
+  title="写真・データが消えた | PCQQ パソコン修理"
+  description="大切な写真や書類が消えてしまった。データ復旧はあきらめる前にご相談を。大分県宇佐市・別府・中津のパソコン修理PCQQがデータ復旧に対応します。"
+>
+  <article class="max-w-3xl mx-auto px-4 py-10">
+
+    <Breadcrumb items={[
+      { label: 'ホーム', href: '/' },
+      { label: '困った症状から探す', href: '/symptoms' },
+      { label: '写真・データが消えた' },
+    ]} />
+
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mt-3 mb-2">
+      写真・データが消えた
+    </h1>
+    <p class="text-gray-500 mb-8">大切な写真や書類が突然なくなってしまった</p>
+
+    <!-- 重要な注意 -->
+    <div class="bg-orange-50 border border-orange-200 rounded-2xl p-5 mb-8">
+      <div class="flex items-start gap-3">
+        <span class="text-2xl shrink-0">⚠️</span>
+        <div>
+          <div class="font-bold text-orange-700 mb-1">データが消えたらすぐに使用を止めてください</div>
+          <p class="text-sm text-orange-600 leading-relaxed">
+            データが消えた後もパソコンを使い続けると、上書きが進みデータが復旧できなくなります。
+            気づいたらすぐにパソコンの使用を止め、PCQQにご連絡ください。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">こんな状態ではありませんか？</h2>
+      <ul class="space-y-2">
+        {[
+          '写真フォルダを開いたら空になっていた',
+          'パソコンを修理に出したらデータが消えて戻ってきた',
+          '誤ってファイルを削除してしまった',
+          'HDDが認識されなくなってデータが見えない',
+          'Windowsが起動しなくなって中のデータが取り出せない',
+          'フォーマットしてしまった',
+        ].map(item => (
+          <li class="flex items-start gap-2 text-gray-700">
+            <span class="text-blue-500 mt-0.5 shrink-0">✓</span>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">データ復旧できるケース</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {[
+          { title: '誤削除・ゴミ箱削除', desc: 'ゴミ箱から消した場合でも、上書きが少なければ復旧できる可能性が高い。' },
+          { title: 'OS起動不可（HDD正常）', desc: 'Windowsが起動しなくてもHDDが生きていればデータ取り出しが可能。' },
+          { title: 'HDD論理障害', desc: 'ファイルシステムの破損など。専用ソフトで復旧できる場合がある。' },
+          { title: 'フォーマット後', desc: 'フォーマット直後であれば復旧できる場合も。早めの相談が大切。' },
+        ].map(item => (
+          <div class="bg-green-50 rounded-xl p-4 border border-green-100">
+            <div class="font-bold text-gray-800 mb-1">{item.title}</div>
+            <div class="text-sm text-gray-600 leading-relaxed">{item.desc}</div>
+          </div>
+        ))}
+      </div>
+      <p class="mt-4 text-sm text-gray-500 bg-gray-50 rounded-xl p-3">
+        HDDの<strong>物理障害</strong>（異音・認識しないなど）の場合は専門業者への依頼をご案内します。
+      </p>
+    </section>
+
+    <section class="mb-10 bg-blue-50 rounded-2xl p-6">
+      <h2 class="text-xl font-bold text-gray-900 mb-3">PCQQの対応</h2>
+      <ul class="space-y-2 text-gray-700">
+        {[
+          'データ復旧ソフトを使って削除・消失ファイルを探索',
+          '起動しないパソコンからのデータ取り出し',
+          '復旧したデータを外付けHDDやUSBメモリに保存',
+          '今後のバックアップ環境の整備（OneDrive・外付けHDD等）',
+        ].map(item => (
+          <li class="flex items-start gap-2">
+            <span class="text-blue-500 mt-0.5 shrink-0">✓</span>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">料金目安</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="text-left px-4 py-3 rounded-tl-lg font-bold text-gray-700">作業内容</th>
+              <th class="text-right px-4 py-3 rounded-tr-lg font-bold text-gray-700">目安料金</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ['データ復旧（論理障害）', '10,000円〜'],
+              ['OS起動不可からのデータ取り出し', '10,000円〜'],
+              ['バックアップ環境構築', '5,000円〜'],
+              ['出張費', '2,000円（宇佐市内）、その他の地域 4,000円～'],
+            ].map(([label, price], i) => (
+              <tr class={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                <td class="px-4 py-3 text-gray-700 border-t border-gray-100">{label}</td>
+                <td class="px-4 py-3 text-right font-medium text-gray-900 border-t border-gray-100">{price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs text-gray-400 mt-2">※ 復旧できなかった場合は料金をいただきません。まずはご相談ください。</p>
+    </section>
+
+    <CallToAction
+      heading="大切な思い出、あきらめる前にご相談を"
+      subtext="早めのご連絡が復旧率を上げます。まずお電話ください。"
+    />
+
+  </article>
+</Layout>

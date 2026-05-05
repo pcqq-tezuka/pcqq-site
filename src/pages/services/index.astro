@@ -1,25 +1,60 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CallToAction from '../../components/CallToAction.astro';
 
 const services = [
-  { href: '/services/startup', label: '起動・動作改善' },
-  { href: '/services/ssd-upgrade', label: 'SSD換装' },
-  { href: '/services/data-recovery', label: 'データ復旧' },
-  { href: '/services/lcd-repair', label: '液晶交換' },
-  { href: '/services/network-email', label: 'ネット・メール設定' },
-  { href: '/services/virus-protection', label: 'ウイルス対策' },
-  { href: '/services/starlink', label: 'スターリンク導入' },
-  { href: '/services/security-camera', label: '防犯カメラ設置' },
-  { href: '/services/digital-inheritance', label: 'デジタル遺品整理' },
+  { href: '/services/startup',           icon: '🔧', label: '起動・動作改善',       desc: '起動しない・遅い・フリーズするを解決' },
+  { href: '/services/ssd-upgrade',       icon: '⚡', label: 'SSD換装',              desc: '古いHDDをSSDに交換して劇的に速く' },
+  { href: '/services/data-recovery',     icon: '💾', label: 'データ復旧',            desc: '消えた写真・書類をできる限り取り戻す' },
+  { href: '/services/lcd-repair',        icon: '🖥️', label: '液晶・画面修理',        desc: '割れた・映らない液晶パネルを交換' },
+  { href: '/services/network-email',     icon: '📶', label: 'ネット・メール設定',    desc: 'Wi-Fi接続・メール設定・プロバイダ変更' },
+  { href: '/services/virus-protection',  icon: '🛡️', label: 'ウイルス対策',         desc: 'ウイルス除去・セキュリティ強化' },
+  { href: '/services/starlink',          icon: '🛰️', label: 'スターリンク導入',     desc: '田舎でも高速ネット。設置から設定まで' },
+  { href: '/services/security-camera',   icon: '📹', label: '防犯カメラ設置',       desc: '自宅・店舗の防犯対策をトータルサポート' },
+  { href: '/services/digital-inheritance', icon: '🕊️', label: 'デジタル遺品整理', desc: '故人のPC・スマホのデータ整理・引き継ぎ' },
 ];
 ---
-<PageLayout title="サービスから探す">
-  <section>
-    <h1>サービスから探す</h1>
-    <ul>
+
+<Layout
+  title="サービス一覧 | PCQQ パソコン修理"
+  description="起動修理・SSD換装・データ復旧・液晶交換・ネット設定・ウイルス対策・スターリンク・防犯カメラ・デジタル遺品整理。大分県宇佐市のパソコン修理屋PCQQのサービス一覧。"
+>
+  <div class="max-w-4xl mx-auto px-4 py-10">
+
+    <Breadcrumb items={[
+      { label: 'ホーム', href: '/' },
+      { label: 'サービス一覧' },
+    ]} />
+
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-3">
+      サービス一覧
+    </h1>
+    <p class="text-gray-500 mb-10">パソコン修理から防犯カメラ・スターリンクまで幅広く対応します。</p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {services.map(s => (
-        <li><a href={s.href}>{s.label}</a></li>
+        <a
+          href={s.href}
+          class="flex items-start gap-4 bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-blue-200 transition-all group"
+        >
+          <span class="text-3xl shrink-0 mt-0.5">{s.icon}</span>
+          <div>
+            <div class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
+              {s.label}
+            </div>
+            <div class="text-sm text-gray-500 leading-relaxed">{s.desc}</div>
+          </div>
+        </a>
       ))}
-    </ul>
-  </section>
-</PageLayout>
+    </div>
+
+    <div class="mt-12">
+      <CallToAction
+        heading="まずはお気軽にご相談ください"
+        subtext="出張対応・相談無料。どんな小さなことでもお声がけください。"
+      />
+    </div>
+
+  </div>
+</Layout>

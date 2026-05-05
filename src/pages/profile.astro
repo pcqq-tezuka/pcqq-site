@@ -1,9 +1,106 @@
 ---
-import PageLayout from '../layouts/PageLayout.astro';
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import CallToAction from '../components/CallToAction.astro';
 ---
-<PageLayout title="手塚信哉について">
-  <section>
-    <h1>手塚信哉について</h1>
-    <p>コンテンツをここに追加</p>
-  </section>
-</PageLayout>
+
+<Layout
+  title="プロフィール | PCQQ パソコン修理"
+  description="PCQQ代表・手塚信哉のプロフィール。大分県宇佐市を拠点に、パソコン修理・サポートを出張専門で行っています。"
+>
+  <article class="max-w-3xl mx-auto px-4 py-10">
+
+    <Breadcrumb items={[
+      { label: 'ホーム', href: '/' },
+      { label: 'プロフィール' },
+    ]} />
+
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mt-3 mb-8">プロフィール</h1>
+
+    <!-- 顔写真＋名前 -->
+    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-10">
+      <div class="shrink-0">
+        <img
+          src="/images/tezuka_main.jpg"
+          alt="手塚信哉"
+          width="160"
+          height="160"
+          class="w-40 h-40 rounded-full object-cover shadow-md"
+          onerror="this.style.display='none'"
+        />
+      </div>
+      <div>
+        <div class="text-xs text-gray-400 mb-1">PCQQ代表</div>
+        <div class="text-2xl font-bold text-gray-900 mb-1">手塚 信哉</div>
+        <div class="text-sm text-gray-500 mb-3">Tezuka Nobuya</div>
+        <div class="flex flex-wrap gap-2">
+          {['パソコン修理', 'ネットワーク設定', 'データ復旧', 'スターリンク', '防犯カメラ'].map(tag => (
+            <span class="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full">{tag}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- 自己紹介 -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">ごあいさつ</h2>
+      <div class="prose prose-gray max-w-none text-sm leading-relaxed space-y-4">
+        <p>
+          はじめまして。PCQQ（ぴーしーきゅーきゅー）の手塚信哉です。
+          大分県宇佐市を拠点に、パソコン修理・IT サポートを出張専門で行っています。
+        </p>
+        <p>
+          「パソコンが壊れた」「ネットが繋がらない」「変な警告が出て怖い」——
+          そんな困りごとを抱えて、どこに相談していいかわからない方のお役に立てればと思い、
+          この仕事をしています。
+        </p>
+        <p>
+          専門用語をできるだけ使わず、わかりやすい言葉でご説明することを心がけています。
+          「こんなことを聞いていいのかな」と遠慮せず、どんな小さなことでもお気軽にご相談ください。
+        </p>
+        <blockquote class="border-l-4 border-blue-400 pl-4 text-gray-600 italic">
+          「直す」だけでなく、「安心して使い続けられる」ところまでサポートします。
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- 対応できること -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">対応できること</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {[
+          { icon: '🔧', label: '起動修理・OS再インストール' },
+          { icon: '⚡', label: 'SSD換装・高速化' },
+          { icon: '💾', label: 'データ復旧・バックアップ' },
+          { icon: '🖥️', label: '液晶パネル交換' },
+          { icon: '📶', label: 'ネット・Wi-Fi・メール設定' },
+          { icon: '🛡️', label: 'ウイルス除去・セキュリティ' },
+          { icon: '🛰️', label: 'スターリンク導入' },
+          { icon: '📹', label: '防犯カメラ設置' },
+          { icon: '👴', label: '高齢者向けサポート' },
+          { icon: '🕊️', label: 'デジタル遺品整理' },
+        ].map(item => (
+          <div class="flex items-center gap-3 bg-gray-50 rounded-xl px-4 py-3 text-sm text-gray-700">
+            <span class="text-xl shrink-0">{item.icon}</span>
+            {item.label}
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 対応エリア -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">対応エリア</h2>
+      <p class="text-sm text-gray-700 leading-relaxed">
+        宇佐市（駅館・四日市・長洲・安心院・院内）を中心に、豊後高田市・中津市・別府市へも出張します。
+        記載のないエリアもお気軽にご相談ください。
+      </p>
+      <a href="/areas" class="inline-block mt-3 text-sm text-blue-600 hover:underline">
+        対応エリア詳細 →
+      </a>
+    </section>
+
+    <CallToAction heading="お気軽にご連絡ください" subtext="出張・相談無料。電話またはLINEでお待ちしています。" />
+
+  </article>
+</Layout>

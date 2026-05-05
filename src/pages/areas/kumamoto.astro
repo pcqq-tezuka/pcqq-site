@@ -1,0 +1,92 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CallToAction from '../../components/CallToAction.astro';
+---
+
+<Layout
+  title="熊本県の対応地域 | PCQQ パソコン修理出張"
+  description="熊本県の出張パソコン修理対応地域。阿蘇市・小国町・菊池市・山鹿市ほか10市町村に対応。出張料5,000円〜。阿蘇エリアの別荘・移住者宅も対応。"
+>
+  <article class="max-w-3xl mx-auto px-4 py-10">
+
+    <Breadcrumb items={[
+      { label: 'ホーム', href: '/' },
+      { label: '出張対応エリア', href: '/areas' },
+      { label: '熊本県の対応地域' },
+    ]} />
+
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mt-3 mb-2">
+      熊本県の対応地域
+    </h1>
+    <p class="text-gray-500 mb-8">熊本県内の一部地域へ出張対応しています</p>
+
+    <div class="bg-gray-50 rounded-2xl p-5 mb-8 flex items-center gap-4">
+      <span class="text-3xl shrink-0">📍</span>
+      <div>
+        <div class="font-bold text-gray-800">出張料: 5,000円〜</div>
+        <div class="text-sm text-gray-600">地域・距離により変動します。具体的な金額はお問い合わせください。</div>
+      </div>
+    </div>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">対応している市町村</h2>
+
+      <div class="space-y-4">
+        <div class="bg-white border border-gray-100 rounded-xl p-5">
+          <div class="font-bold text-gray-800 mb-2 text-sm">阿蘇エリア</div>
+          <p class="text-sm text-gray-600">阿蘇市・小国町・南小国町・産山村・高森町・南阿蘇村・西原村</p>
+        </div>
+        <div class="bg-white border border-gray-100 rounded-xl p-5">
+          <div class="font-bold text-gray-800 mb-2 text-sm">熊本北部</div>
+          <p class="text-sm text-gray-600">山鹿市・菊池市・大津町</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">熊本県内でよくあるご依頼</h2>
+      <ul class="space-y-2">
+        {[
+          '阿蘇エリアの別荘・移住者宅',
+          '山間部でのインターネット環境構築',
+          'スターリンク設置・設定',
+          '出張範囲外として他社に断られた案件',
+        ].map(item => (
+          <li class="flex items-start gap-2 text-gray-700 text-sm">
+            <span class="text-blue-500 mt-0.5 shrink-0">✓</span>{item}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">料金目安</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="text-left px-4 py-3 rounded-tl-lg font-bold text-gray-700">内容</th>
+              <th class="text-right px-4 py-3 rounded-tr-lg font-bold text-gray-700">目安料金</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ['出張料', '5,000円〜（地域・距離によりお見積り）'],
+              ['トラブル診断', '2,000円（原因が明らかな場合は不要）'],
+              ['修理・設定（内容による）', '3,000円〜'],
+            ].map(([label, price], i) => (
+              <tr class={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                <td class="px-4 py-3 text-gray-700 border-t border-gray-100">{label}</td>
+                <td class="px-4 py-3 text-right font-medium text-gray-900 border-t border-gray-100">{price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs text-gray-400 mt-2">※お電話・LINE・メールでまずはご相談ください</p>
+    </section>
+
+    <CallToAction heading="熊本県からのご相談もお気軽に" subtext="相談無料。まずお電話またはLINEでご連絡ください。" />
+  </article>
+</Layout>

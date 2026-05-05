@@ -1,9 +1,400 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 ---
-<PageLayout title="データ復旧">
-  <section>
-    <h1>データ復旧</h1>
-    <p>コンテンツをここに追加</p>
-  </section>
-</PageLayout>
+
+<Layout
+  title="データ復旧 | PCQQ パソコン修理"
+  description="消えたデータ、認識しないHDD・SSDの復旧。安心院のPCQQが秋葉原の専門ラボと連携し、地元窓口で受付・国内トップクラスの技術で救出します。完全成功報酬制。"
+>
+  <article class="max-w-3xl mx-auto px-4 py-10">
+
+    <Breadcrumb items={[
+      { label: 'ホーム', href: '/' },
+      { label: 'サービス一覧', href: '/services' },
+      { label: 'データ復旧' },
+    ]} />
+
+    <!-- ブロック① ファーストビュー -->
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mt-3 mb-2">データ復旧</h1>
+    <p class="text-2xl md:text-3xl font-bold text-blue-700 mb-3 leading-snug">
+      消えたと思ったデータ、<br class="sm:hidden" />まだ諦めないでください。
+    </p>
+    <p class="text-gray-600 mb-8 leading-relaxed">
+      安心院のPCQQと、秋葉原のクリーンルーム専門ラボが連携。<br />
+      地元の窓口で受け付け、国内トップクラスの技術で救出します。
+    </p>
+
+    <!-- ファーストビュー CTA -->
+    <div class="flex flex-col sm:flex-row gap-3 mb-10">
+      <a
+        href="tel:0503159-9587"
+        class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl px-6 py-3.5 transition-colors"
+      >
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+        </svg>
+        今すぐ電話する
+      </a>
+      <a
+        href="http://line.me/ti/p/%40cbe1836f"
+        class="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl px-6 py-3.5 transition-colors"
+        target="_blank" rel="noopener noreferrer"
+      >
+        <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.03 2 11c0 2.76 1.37 5.22 3.52 6.89L4.5 22l4.23-2.22C9.72 20.25 10.84 20.5 12 20.5c5.52 0 10-4.03 10-9S17.52 2 12 2z"/>
+        </svg>
+        LINEで相談する
+      </a>
+      <a
+        href="/contact"
+        class="flex items-center justify-center gap-2 bg-white border-2 border-gray-300 hover:border-blue-400 text-gray-700 font-bold rounded-xl px-6 py-3.5 transition-colors"
+      >
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+        メールで問い合わせ
+      </a>
+    </div>
+
+    <!-- ブロック② 警告ボックス -->
+    <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-5 mb-10">
+      <div class="flex items-start gap-3">
+        <span class="text-2xl shrink-0">⚠</span>
+        <div>
+          <div class="font-bold text-amber-800 mb-3">こんなときは、すぐに電源を切ってご相談を</div>
+          <ul class="space-y-1.5 mb-4">
+            {[
+              'ドライブから カチカチ・カコン という異音がする',
+              '水没・落下など強い衝撃を与えてしまった',
+              '「フォーマットしますか?」と表示される',
+              'Shift+Delete で重要フォルダを削除してしまった',
+            ].map(item => (
+              <li class="flex items-start gap-2 text-sm text-amber-800">
+                <span class="shrink-0 mt-0.5">・</span>{item}
+              </li>
+            ))}
+          </ul>
+          <p class="text-sm text-amber-700 leading-relaxed border-t border-amber-200 pt-3">
+            電源を入れ直したり復旧ソフトを試したりすると、<strong>症状が悪化して復旧率が下がります</strong>。<br />
+            まずはPCQQへご相談ください。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ブロック③ なぜ専門ラボと提携しているのか -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">地元の安心と、首都圏の高度技術。両方をお届けします。</h2>
+      <p class="text-gray-700 leading-relaxed text-sm mb-5">
+        ヘッドクラッシュや基板損傷など物理障害を伴う復旧には、無塵環境（クリーンルーム）・顕微鏡作業・ファームウェア解析装置が不可欠です。<br class="hidden sm:block" /><br class="hidden sm:block" />
+        これらの設備と専任技術者を、地方の店舗で常設するのは現実的ではありません。<br />
+        そこでPCQQは、以下のハイブリッド体制を採用しています。
+      </p>
+
+      <!-- 役割分担ダイアグラム -->
+      <div class="bg-blue-50 rounded-2xl p-6 mb-4">
+        <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-0">
+          <!-- PCQQ -->
+          <div class="flex-1 bg-white rounded-xl border border-blue-200 p-4 text-center w-full">
+            <div class="text-xs font-bold text-blue-500 uppercase tracking-wide mb-1">PCQQ（安心院）</div>
+            <div class="text-sm font-bold text-gray-800 mb-2">地元の窓口</div>
+            <ul class="text-xs text-gray-600 space-y-1 text-left">
+              <li class="flex items-center gap-1"><span class="text-blue-400">▶</span> 受付・ヒアリング</li>
+              <li class="flex items-center gap-1"><span class="text-blue-400">▶</span> 初期診断・安全梱包</li>
+              <li class="flex items-center gap-1"><span class="text-blue-400">▶</span> 納品・アフターサポート</li>
+            </ul>
+          </div>
+
+          <!-- 矢印 -->
+          <div class="flex flex-row sm:flex-col items-center gap-1 sm:mx-3 my-1 sm:my-0">
+            <div class="text-blue-400 font-bold text-lg rotate-90 sm:rotate-0">⇄</div>
+            <div class="text-xs text-blue-500 font-medium whitespace-nowrap">安全発送</div>
+          </div>
+
+          <!-- 提携ラボ -->
+          <div class="flex-1 bg-blue-600 rounded-xl border border-blue-600 p-4 text-center w-full">
+            <div class="text-xs font-bold text-blue-200 uppercase tracking-wide mb-1">提携専門ラボ（首都圏）</div>
+            <div class="text-sm font-bold text-white mb-2">クリーンルーム完備</div>
+            <ul class="text-xs text-blue-100 space-y-1 text-left">
+              <li class="flex items-center gap-1"><span class="text-blue-300">▶</span> 障害レベル特定・診断</li>
+              <li class="flex items-center gap-1"><span class="text-blue-300">▶</span> ドライブ分解・修復</li>
+              <li class="flex items-center gap-1"><span class="text-blue-300">▶</span> データ抽出・復旧</li>
+            </ul>
+          </div>
+        </div>
+        <p class="text-xs text-blue-700 mt-4 text-center">
+          お客様の窓口は最初から最後まで PCQQ。提携ラボと直接やり取りする必要はありません。
+        </p>
+      </div>
+    </section>
+
+    <!-- ブロック④ 料金の目安 -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">料金の目安</h2>
+
+      <!-- デスクトップ: テーブル / モバイル: カード -->
+      <div class="hidden sm:block overflow-x-auto mb-4">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="text-left px-4 py-3 rounded-tl-lg font-bold text-gray-700">障害区分</th>
+              <th class="text-left px-4 py-3 font-bold text-gray-700">対象メディア</th>
+              <th class="text-right px-4 py-3 rounded-tr-lg font-bold text-gray-700">参考料金</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ['軽度論理障害（誤削除など）', 'HDD / SSD / USB', '58,500円〜'],
+              ['中度物理障害（不良セクタ等）', 'HDD 2TBまで', '110,500円〜'],
+              ['重度物理障害（水没・損傷）', 'HDD 6TBまで', '175,500円〜'],
+              ['SSDファーム障害', 'NVMe / 2.5inch SSD', '150,000円〜'],
+              ['RAID / NAS / サーバー', 'RAID 0/5/6 など', '71,800円〜'],
+            ].map(([type, media, price], i) => (
+              <tr class={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                <td class="px-4 py-3 text-gray-700 border-t border-gray-100 font-medium">{type}</td>
+                <td class="px-4 py-3 text-gray-500 border-t border-gray-100">{media}</td>
+                <td class="px-4 py-3 text-right font-bold text-gray-900 border-t border-gray-100">{price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- モバイル用カード -->
+      <div class="sm:hidden space-y-2 mb-4">
+        {[
+          ['軽度論理障害（誤削除など）', 'HDD / SSD / USB', '58,500円〜'],
+          ['中度物理障害（不良セクタ等）', 'HDD 2TBまで', '110,500円〜'],
+          ['重度物理障害（水没・損傷）', 'HDD 6TBまで', '175,500円〜'],
+          ['SSDファーム障害', 'NVMe / 2.5inch SSD', '150,000円〜'],
+          ['RAID / NAS / サーバー', 'RAID 0/5/6 など', '71,800円〜'],
+        ].map(([type, media, price]) => (
+          <div class="bg-white border border-gray-100 rounded-xl p-4">
+            <div class="font-bold text-gray-800 text-sm mb-0.5">{type}</div>
+            <div class="text-xs text-gray-500 mb-2">{media}</div>
+            <div class="text-right font-bold text-gray-900">{price}</div>
+          </div>
+        ))}
+      </div>
+
+      <!-- 注記 -->
+      <div class="bg-green-50 border border-green-200 rounded-xl p-4 space-y-1.5">
+        <p class="text-sm text-green-800 flex items-start gap-2">
+          <span class="shrink-0 font-bold">✓</span>
+          <span>正式なお見積りは、初期診断後にご提示します</span>
+        </p>
+        <p class="text-sm font-bold text-green-800 flex items-start gap-2">
+          <span class="shrink-0">✓</span>
+          <span>完全成功報酬制 — 復旧できなかった場合の費用はかかりません</span>
+        </p>
+        <p class="text-sm text-green-800 flex items-start gap-2">
+          <span class="shrink-0">✓</span>
+          <span>見積りにご納得いただけない場合のキャンセルも費用0円（返送料のみ）</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- ブロック⑤ ご依頼から復旧までの流れ -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-6">ご依頼から復旧までの流れ</h2>
+      <div class="space-y-0">
+        {[
+          {
+            step: '01',
+            title: '無料ヒアリング・受付',
+            body: '電話・LINE・メールまたは訪問にて症状を伺います。メディアをお預かりし、衝撃を与えないよう厳重に梱包して提携ラボへ発送します。',
+            note: null,
+            timing: null,
+          },
+          {
+            step: '02',
+            title: '初期診断',
+            body: 'ラボ到着後、専門技術者が障害レベルを特定。復旧可能なファイル一覧と正式なお見積りをご提示します。',
+            note: 'ここでキャンセル無料',
+            timing: '1〜2営業日',
+          },
+          {
+            step: '03',
+            title: 'ご承認・作業開始',
+            body: 'お見積りにご納得いただけた場合のみ作業開始。ご納得いただけなければキャンセル可能（費用0円）。',
+            note: 'キャンセル費用0円',
+            timing: null,
+          },
+          {
+            step: '04',
+            title: 'データ復旧',
+            body: 'クリーンルーム内でのドライブ分解、ファームウェア修復など、障害に応じた高度復旧作業を実施。',
+            note: null,
+            timing: '論理障害は数時間 / 物理障害は3〜5営業日',
+          },
+          {
+            step: '05',
+            title: '納品・アフターサポート',
+            body: '復旧データをUSBまたは外付けHDDにコピーしてお渡し。破損したドライブは返却または物理破棄を選択いただけます。',
+            note: null,
+            timing: null,
+          },
+        ].map((s, i, arr) => (
+          <div class="flex gap-4">
+            <!-- 縦線 -->
+            <div class="flex flex-col items-center">
+              <div class="w-10 h-10 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center shrink-0">
+                {s.step}
+              </div>
+              {i < arr.length - 1 && <div class="w-0.5 bg-blue-200 flex-1 my-1"></div>}
+            </div>
+            <!-- 内容 -->
+            <div class="pb-6 flex-1">
+              <div class="flex flex-wrap items-center gap-2 mb-1">
+                <div class="font-bold text-gray-900">{s.title}</div>
+                {s.timing && (
+                  <span class="text-xs text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">{s.timing}</span>
+                )}
+                {s.note && (
+                  <span class="text-xs text-green-700 bg-green-50 border border-green-200 font-bold px-2 py-0.5 rounded-full">✓ {s.note}</span>
+                )}
+              </div>
+              <p class="text-sm text-gray-600 leading-relaxed">{s.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ブロック⑥ PCQQ窓口を利用する4つの安心 -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">PCQQ窓口を利用する4つの安心</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {[
+          {
+            num: '1',
+            title: 'ワンストップ対応',
+            body: '梱包・発送・進捗確認のすべてをPCQQが代行。お客様は提携ラボと直接やり取りする必要はありません。',
+          },
+          {
+            num: '2',
+            title: '対面でのサポート',
+            body: 'メディアの状態説明、復旧後の納品、アフター相談まで、すべて対面で対応可能です。',
+          },
+          {
+            num: '3',
+            title: '見積後キャンセル無料',
+            body: '初期診断と正式見積りにご納得いただけなければ、その時点でキャンセル可能。費用は一切かかりません（返送料のみご負担）。',
+          },
+          {
+            num: '4',
+            title: '復旧後のリスク対策まで',
+            body: '復旧と同時に、SSD換装や自動バックアップ設定もご提案。「同じ事故を二度と起こさない」体制を整えます。',
+          },
+        ].map(item => (
+          <div class="bg-green-50 border border-green-200 rounded-xl p-4">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="w-6 h-6 rounded-full bg-green-600 text-white text-xs font-bold flex items-center justify-center shrink-0">
+                {item.num}
+              </div>
+              <div class="font-bold text-green-900">{item.title}</div>
+            </div>
+            <p class="text-sm text-green-800 leading-relaxed">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ブロック⑦ よくある質問 -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">よくある質問</h2>
+      <div class="space-y-3">
+        {[
+          {
+            q: '最短どれくらいで復旧できますか?',
+            a: '論理障害なら、ラボ到着後1営業日が目安です。物理障害でも3〜5営業日が標準。特急プラン（追加料金）もご相談いただけます。',
+          },
+          {
+            q: '復旧できなかった場合はどうなりますか?',
+            a: '完全成功報酬制のため、費用は0円です。お預かりしたメディアの返送料のみご負担いただきます。',
+          },
+          {
+            q: '個人情報の漏洩が心配です。',
+            a: '提携ラボでは監視カメラによる常時監視、セコムによる機械警備を導入しています。作業はオフライン環境で行うため、ネットワーク経由での情報流出のリスクはありません。',
+          },
+        ].map(item => (
+          <details class="group bg-white border border-gray-200 rounded-xl overflow-hidden">
+            <summary class="flex items-center justify-between px-5 py-4 cursor-pointer font-bold text-gray-800 list-none select-none hover:bg-gray-50 transition-colors">
+              <span class="flex items-start gap-2">
+                <span class="text-blue-500 font-bold shrink-0">Q</span>
+                {item.q}
+              </span>
+              <svg class="w-4 h-4 text-gray-400 shrink-0 ml-3 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </summary>
+            <div class="px-5 pb-4 text-sm text-gray-700 leading-relaxed border-t border-gray-100 pt-3">
+              <span class="text-green-600 font-bold mr-2">A</span>{item.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- 関連サービスリンク -->
+    <section class="mb-10">
+      <h2 class="text-lg font-bold text-gray-900 mb-3">関連サービス</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {[
+          { href: '/services/ssd-upgrade', label: 'SSD換装', desc: '復旧後の再発防止にSSD換装がおすすめです' },
+          { href: '/services/startup', label: '起動しないトラブル', desc: 'パソコンが起動しない・ブルースクリーンの対処' },
+        ].map(link => (
+          <a
+            href={link.href}
+            class="flex items-center justify-between bg-white border border-gray-100 rounded-xl p-4 hover:shadow-md hover:border-blue-200 transition-all group"
+          >
+            <div>
+              <div class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors text-sm">{link.label}</div>
+              <div class="text-xs text-gray-500 mt-0.5">{link.desc}</div>
+            </div>
+            <svg class="w-4 h-4 text-gray-400 shrink-0 ml-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- ブロック⑧ 最終CTA -->
+    <div class="bg-blue-700 rounded-2xl p-8 text-center">
+      <h2 class="text-xl font-bold text-white mb-3">「もうダメかも」と諦める前に</h2>
+      <p class="text-blue-100 text-sm leading-relaxed mb-6">
+        データ復旧は、初期対応で結果が大きく変わります。<br />
+        電源を入れ直したり、復旧ソフトを試す前に、<br />
+        まずはPCQQにご相談ください。<br /><br />
+        無料診断・お見積りは、電話・LINE・メールから。
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a
+          href="tel:0503159-9587"
+          class="flex items-center justify-center gap-2 bg-white text-blue-700 font-bold rounded-xl px-6 py-3.5 hover:bg-blue-50 transition-colors"
+        >
+          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+          </svg>
+          050-3159-9587
+        </a>
+        <a
+          href="http://line.me/ti/p/%40cbe1836f"
+          class="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-400 text-white font-bold rounded-xl px-6 py-3.5 transition-colors"
+          target="_blank" rel="noopener noreferrer"
+        >
+          LINEで相談する
+        </a>
+        <a
+          href="/contact"
+          class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl px-6 py-3.5 transition-colors"
+        >
+          メールで問い合わせ
+        </a>
+      </div>
+    </div>
+
+  </article>
+</Layout>

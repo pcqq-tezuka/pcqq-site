@@ -1,9 +1,102 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CallToAction from '../../components/CallToAction.astro';
 ---
-<PageLayout title="買い替えか修理か迷っている">
-  <section>
-    <h1>買い替えか修理か迷っている</h1>
-    <p>コンテンツをここに追加</p>
-  </section>
-</PageLayout>
+
+<Layout
+  title="修理か買い替えか迷っている | PCQQ パソコン修理"
+  description="古いパソコン、修理すべき？買い替えるべき？正直にアドバイスします。大分県宇佐市のパソコン修理屋PCQQが中立の立場でご相談に応じます。"
+>
+  <article class="max-w-3xl mx-auto px-4 py-10">
+
+    <Breadcrumb items={[
+      { label: 'ホーム', href: '/' },
+      { label: '困った症状から探す', href: '/symptoms' },
+      { label: '修理か買い替えか迷っている' },
+    ]} />
+
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mt-3 mb-2">
+      修理か買い替えか迷っている
+    </h1>
+    <p class="text-gray-500 mb-8">正直にアドバイスします。まずはご相談ください。</p>
+
+    <!-- PCQQからのメッセージ -->
+    <div class="bg-blue-50 rounded-2xl p-6 mb-10">
+      <p class="text-gray-700 leading-relaxed">
+        「修理屋に相談したら修理を勧められるに決まってる」と思っていませんか？<br />
+        PCQQでは、修理より買い替えた方がよいケースでは<strong>正直にそうお伝えします</strong>。
+        お客様の状況に合った最善の選択肢をご提案します。
+      </p>
+    </div>
+
+    <!-- 修理がおすすめのケース -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">修理がおすすめのケース</h2>
+      <ul class="space-y-3">
+        {[
+          { label: '使い始めて3〜5年以内', desc: 'まだ使える年数が残っている。修理でコストパフォーマンスが高い。' },
+          { label: 'SSD換装で速くなる可能性がある', desc: 'HDDが遅いだけなら、SSD換装で新品同様の速さになる。' },
+          { label: '特定のソフト・設定が必要', desc: '業務用ソフトや特殊な設定があり、移行が難しい場合。' },
+          { label: '予算を抑えたい', desc: '修理費用が新品購入より大幅に安い場合。' },
+        ].map(item => (
+          <li class="flex items-start gap-3 bg-green-50 rounded-xl p-4">
+            <span class="text-green-500 text-lg shrink-0">○</span>
+            <div>
+              <div class="font-bold text-gray-800">{item.label}</div>
+              <div class="text-sm text-gray-600">{item.desc}</div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- 買い替えがおすすめのケース -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">買い替えがおすすめのケース</h2>
+      <ul class="space-y-3">
+        {[
+          { label: '購入から7〜8年以上経過', desc: 'パーツが次々と壊れる可能性が高く、修理費用が積み重なる。' },
+          { label: 'Windows 10のサポート終了（2025年10月）', desc: 'セキュリティリスクが高まるため、Windows 11対応機への移行を推奨。' },
+          { label: '修理費用が本体価格の半額以上', desc: '修理コストが高すぎる場合は買い替えた方がトータルでお得なことも。' },
+          { label: '複数箇所が同時に故障', desc: '一箇所直してもまた別の箇所が壊れる、という状態は買い替えのサイン。' },
+        ].map(item => (
+          <li class="flex items-start gap-3 bg-gray-50 rounded-xl p-4">
+            <span class="text-gray-400 text-lg shrink-0">△</span>
+            <div>
+              <div class="font-bold text-gray-800">{item.label}</div>
+              <div class="text-sm text-gray-600">{item.desc}</div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- 新しいパソコン選びのサポート -->
+    <section class="mb-10 bg-indigo-50 rounded-2xl p-6">
+      <h2 class="text-xl font-bold text-gray-900 mb-3">新しいパソコン選びもサポートします</h2>
+      <p class="text-gray-700 text-sm leading-relaxed mb-3">
+        買い替えになった場合も、用途に合ったパソコンの選び方から購入後のセットアップ・データ移行まで一括対応します。
+      </p>
+      <ul class="space-y-1 text-sm text-gray-600">
+        {[
+          '用途に合ったパソコンのご提案',
+          'メーカー・価格帯のご相談',
+          '購入後のセットアップ・初期設定',
+          '旧パソコンからのデータ・メール移行',
+        ].map(item => (
+          <li class="flex items-start gap-2">
+            <span class="text-indigo-500 shrink-0">✓</span>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <CallToAction
+      heading="まず相談してみてください"
+      subtext="修理・買い替えどちらがよいか、中立の立場でアドバイスします。相談無料。"
+    />
+
+  </article>
+</Layout>
