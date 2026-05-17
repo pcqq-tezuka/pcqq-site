@@ -7,15 +7,18 @@ import {
   getAllBlogs,
   formatDate,
   getOgImageUrl,
+  getPostSlug,
+  CATEGORY_META,
 } from '../../lib/microcms';
 import type { BlogPost } from '../../lib/microcms';
+import CategoryBadge from '../../components/CategoryBadge.astro';
 
 // ─── SSG: 全記事パスを生成 ────────────────────────────────────
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
     const data = await getAllBlogs();
     return data.contents.map(post => ({
-      params: { slug: post.id },
+      params: { slug: getPostSlug(post) },
       props:  { post },
     }));
   } catch (e) {
@@ -30,7 +33,12 @@ interface Props {
 }
 const { post } = Astro.props;
 
-const ogImage = getOgImageUrl(post.eyecatch);
+const ogImage = getOgImageUrl(post.thumbnail);
+
+const categorySlug = typeof post.category === 'string'
+  ? post.category
+  : post.category?.slug;
+const categoryName = categorySlug ? CATEGORY_META[categorySlug]?.label : undefined;
 ---
 
 <Layout
@@ -43,19 +51,22 @@ const ogImage = getOgImageUrl(post.eyecatch);
 
     <!-- パンくずリスト -->
     <Breadcrumb items={[
-      { label: 'ホーム',  href: '/' },
-      { label: 'ブログ',  href: '/blog' },
+      { label: 'ホーム', href: '/' },
+      { label: 'ブログ', href: '/blog' },
+      ...(categorySlug && categoryName
+        ? [{ label: categoryName, href: `/blog/category/${categorySlug}` }]
+        : []),
       { label: post.title },
     ]} />
 
     <!-- アイキャッチ画像 -->
-    {post.eyecatch && (
+    {post.thumbnail && (
       <div class="mt-4 mb-8 rounded-2xl overflow-hidden shadow-md">
         <img
-          src={`${post.eyecatch.url}?w=900&auto=format`}
+          src={`${post.thumbnail.url}?w=900&auto=format`}
           alt={post.title}
-          width={post.eyecatch.width}
-          height={post.eyecatch.height}
+          width={post.thumbnail.width}
+          height={post.thumbnail.height}
           class="w-full object-cover"
           loading="eager"
         />
@@ -63,19 +74,19 @@ const ogImage = getOgImageUrl(post.eyecatch);
     )}
 
     <!-- ヘッダー -->
-    <header class="mb-8 {post.eyecatch ? '' : 'mt-4'}">
-      <time
-        datetime={post.publishedAt}
-        class="text-sm text-gray-400"
-      >
-        {formatDate(post.publishedAt)}
-        {post.revisedAt !== post.publishedAt && (
-          <span class="ml-3 text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">
-            更新: {formatDate(post.revisedAt)}
-          </span>
-        )}
-      </time>
-      <h1 class="text-2xl md:text-3xl font-bold text-gray-900 leading-snug mt-3">
+    <header class="mb-8 mt-4">
+      <div class="flex items-center gap-3 mb-3">
+        <CategoryBadge slug={categorySlug} />
+        <time datetime={post.publishedAt} class="text-sm text-gray-400">
+          {formatDate(post.publishedAt)}
+          {post.revisedAt !== post.publishedAt && (
+            <span class="ml-3 text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">
+              更新: {formatDate(post.revisedAt)}
+            </span>
+          )}
+        </time>
+      </div>
+      <h1 class="text-2xl md:text-3xl font-bold text-gray-900 leading-snug">
         {post.title}
       </h1>
     </header>
@@ -87,7 +98,7 @@ const ogImage = getOgImageUrl(post.eyecatch);
              prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
              prose-img:rounded-xl prose-img:shadow-sm
              prose-code:bg-gray-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:before:content-none prose-code:after:content-none"
-      set:html={post.content}
+      set:html={post.body}
     />
 
     <!-- 区切り -->
@@ -107,10 +118,28 @@ const ogImage = getOgImageUrl(post.eyecatch);
     </div>
 
     <!-- CTA -->
-    <CallToAction
-      heading="修理・設定のご相談はお気軽に"
-      subtext="出張対応・相談無料。まずはお電話またはLINEで。"
-    />
+    <CallToAction category={categorySlug} />
 
   </article>
 </Layout>
+
+<style is:global>
+  /* microCMS のコードブロック（<pre><code>）を見やすく */
+  .prose pre {
+    background-color: #1e293b;
+    color: #f1f5f9;
+    padding: 1rem 1.25rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+  .prose pre code {
+    background-color: transparent !important;
+    color: inherit !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    font-size: inherit !important;
+    font-weight: 400;
+  }
+</style>

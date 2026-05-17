@@ -1,7 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getLatestBlogs, formatDate, extractExcerpt } from '../lib/microcms';
+import { getLatestBlogs, formatDate, extractExcerpt, getCategorySlug, getPostSlug } from '../lib/microcms';
 import type { BlogPost } from '../lib/microcms';
+import CategoryBadge from '../components/CategoryBadge.astro';
 
 // ブロック⑨: 最新ブログ3件をビルド時に取得
 let latestPosts: BlogPost[] = [];
@@ -94,39 +95,39 @@ const reviews = [
 // ブログカードはlatestPostsから生成（取得失敗時はプレースホルダー）
 const placeholderPosts = [
   {
-    id: '',
     href: '/blog',
     date: '2025年4月',
     title: '起動しないパソコン、HDD交換で復活した事例',
     excerpt: 'ブルースクリーンが出て起動不能になったノートパソコン。原因はHDDの物理障害でした。SSDに換装して復旧した記録です。',
-    eyecatch: null,
+    thumbnail: null,
+    categorySlug: undefined as string | undefined,
   },
   {
-    id: '',
     href: '/blog',
     date: '2025年3月',
     title: 'スターリンク衛星インターネットを宇佐市農村部に設置',
     excerpt: '光回線が引けない山間部でも高速通信が実現できました。設置から接続完了までの手順を詳しくご紹介します。',
-    eyecatch: null,
+    thumbnail: null,
+    categorySlug: undefined as string | undefined,
   },
   {
-    id: '',
     href: '/blog',
     date: '2025年3月',
     title: 'サポート詐欺の被害に遭う前に — 偽警告の見分け方',
     excerpt: '「Windowsがウイルスに感染しています」という偽の警告画面。慌てて電話しないでください。見分け方と対処法を解説。',
-    eyecatch: null,
+    thumbnail: null,
+    categorySlug: undefined as string | undefined,
   },
 ];
 
 const blogCards = latestPosts.length > 0
   ? latestPosts.map(p => ({
-      id:      p.id,
-      href:    `/blog/${p.id}`,
-      date:    formatDate(p.publishedAt),
-      title:   p.title,
-      excerpt: p.excerpt ?? extractExcerpt(p.content),
-      eyecatch: p.eyecatch ?? null,
+      href:        `/blog/${getPostSlug(p)}`,
+      date:        formatDate(p.publishedAt),
+      title:       p.title,
+      excerpt:     p.excerpt ?? extractExcerpt(p.body),
+      thumbnail:   p.thumbnail ?? null,
+      categorySlug: getCategorySlug(p.category),
     }))
   : placeholderPosts;
 ---
@@ -551,9 +552,9 @@ const blogCards = latestPosts.length > 0
           <article class="flex flex-col bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
             <!-- サムネイル -->
             <a href={post.href} tabindex="-1" aria-hidden="true">
-              {post.eyecatch ? (
+              {post.thumbnail ? (
                 <img
-                  src={`${post.eyecatch.url}?w=480&h=270&fit=crop&auto=format`}
+                  src={`${post.thumbnail.url}?w=480&h=270&fit=crop&auto=format`}
                   alt={post.title}
                   width="480"
                   height="270"
@@ -569,7 +570,10 @@ const blogCards = latestPosts.length > 0
               )}
             </a>
             <div class="p-5 flex flex-col flex-1">
-              <time class="text-xs text-gray-400 mb-2">{post.date}</time>
+              <div class="flex items-center gap-2 mb-2">
+                <CategoryBadge slug={post.categorySlug} />
+                <time class="text-xs text-gray-400">{post.date}</time>
+              </div>
               <h3 class="font-bold text-gray-900 mb-2 leading-snug">
                 <a href={post.href} class="hover:text-blue-600 transition-colors">{post.title}</a>
               </h3>

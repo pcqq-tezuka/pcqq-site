@@ -2,12 +2,34 @@
 interface Props {
   heading?: string;
   subtext?: string;
+  category?: string;
 }
 
-const {
-  heading = 'お気軽にご相談ください',
-  subtext = '出張対応・相談無料。まずはお電話またはLINEで。',
-} = Astro.props;
+const CTA_BY_CATEGORY: Record<string, { heading: string; subtext: string }> = {
+  scam: {
+    heading: '詐欺の被害が心配な方は、すぐご連絡を',
+    subtext: '「電話してしまった」「お金を払ってしまった」そんな状況でも、まだ取り返しがつく可能性があります。慌てず、まずはご相談ください。',
+  },
+  case: {
+    heading: '同じようなトラブルでお困りなら',
+    subtext: 'この事例と似た症状でお悩みの方は、お気軽にご相談ください。出張対応もLINE相談も可能です。',
+  },
+  tips: {
+    heading: 'パソコンのお困りごとはありませんか?',
+    subtext: '「自分で試したけど解決しない」「もっと詳しく知りたい」そんなときは、お電話・LINE・メールでお気軽に。',
+  },
+};
+
+const DEFAULT_CTA = {
+  heading: '修理・設定のご相談はお気軽に',
+  subtext: '出張対応・相談無料。まずはお電話またはLINEで。',
+};
+
+const { heading: headingProp, subtext: subtextProp, category } = Astro.props;
+
+const categoryCta = category ? CTA_BY_CATEGORY[category] : undefined;
+const heading = headingProp ?? categoryCta?.heading ?? DEFAULT_CTA.heading;
+const subtext = subtextProp ?? categoryCta?.subtext ?? DEFAULT_CTA.subtext;
 ---
 
 <section

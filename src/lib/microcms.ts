@@ -9,11 +9,30 @@ export const client = createClient({
 
 // ─── 型定義 ────────────────────────────────────────────────────
 export type BlogPost = MicroCMSListContent & {
-  title:    string;
-  content:  string;
-  eyecatch?: MicroCMSImage;
-  excerpt?: string;
+  title:      string;
+  slug?:      string;
+  body:       string;
+  thumbnail?: MicroCMSImage;
+  excerpt?:   string;
+  category?:  { id: string; name: string; slug: string } | string;
 };
+
+export const CATEGORY_META: Record<string, { label: string }> = {
+  scam: { label: 'サポート詐欺対策' },
+  case: { label: '修理事例' },
+  tips: { label: 'お役立ち情報' },
+  news:        { label: 'お知らせ' },
+  information: { label: 'お知らせ' },
+};
+
+export function getCategorySlug(category?: BlogPost['category']): string | undefined {
+  if (!category) return undefined;
+  return typeof category === 'string' ? category : category.slug;
+}
+
+export function getPostSlug(post: BlogPost): string {
+  return post.slug ?? post.id;
+}
 
 // ─── ユーティリティ ────────────────────────────────────────────
 
@@ -29,10 +48,10 @@ export function extractExcerpt(html: string, length = 120): string {
   return text.length > length ? text.slice(0, length) + '…' : text;
 }
 
-/** eyecatchをOGP用画像URL（1200×630）に変換 */
-export function getOgImageUrl(eyecatch?: MicroCMSImage): string {
-  if (!eyecatch) return '/og-default.jpg';
-  return `${eyecatch.url}?w=1200&h=630&fit=crop&auto=format`;
+/** thumbnailをOGP用画像URL（1200×630）に変換 */
+export function getOgImageUrl(thumbnail?: MicroCMSImage): string {
+  if (!thumbnail) return '/og-default.jpg';
+  return `${thumbnail.url}?w=1200&h=630&fit=crop&auto=format`;
 }
 
 // ─── API関数 ───────────────────────────────────────────────────
@@ -58,6 +77,14 @@ export async function getAllBlogs() {
   return client.getList<BlogPost>({
     endpoint: 'blogs',
     queries:  { limit: 100, orders: '-publishedAt' },
+  });
+}
+
+/** カテゴリ別記事一覧を取得 */
+export async function getBlogsByCategory(categoryId: string, limit = 20, offset = 0) {
+  return client.getList<BlogPost>({
+    endpoint: 'blogs',
+    queries:  { limit, offset, orders: '-publishedAt', filters: `category[equals]${categoryId}` },
   });
 }
 

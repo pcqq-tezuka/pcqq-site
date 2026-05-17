@@ -1,0 +1,42 @@
+# 旧サイト(WordPress)から新サイトへのリダイレクト設定
+# 作成日: 2026-05-07
+
+# サービス一覧
+/service                                            /services/                            301
+/service/                                           /services/                            301
+
+# 料金表
+/service/price-list                                 /pricing/                             301
+/service/price-list/                                /pricing/                             301
+
+# パソコントラブル一覧
+/service/pc-trouble                                 /symptoms/                            301
+/service/pc-trouble/                                /symptoms/                            301
+
+# HDD/SSD見分け方 → SSD換装サービスへ誘導
+/service/pc-trouble/hdd_or_ssd                      /services/ssd-upgrade/                301
+/service/pc-trouble/hdd_or_ssd/                     /services/ssd-upgrade/                301
+
+# 個別記事 (WordPress archives)
+/archives/1032                                      /blog/scam-fake-microsoft-warning/    301
+/archives/1233                                      /services/ssd-upgrade/                301
+/archives/1243                                      /services/startup/                    301
+/archives/1245                                      /services/lcd-repair/                 301
+/archives/1247                                      /services/virus-protection/           301
+/archives/1249                                      /services/network-email/              301
+/archives/1251                                      /services/data-recovery/              301
+/archives/1261                                      /services/digital-inheritance/        301
+/archives/1573                                      /services/security-camera/            301
+/archives/1585                                      /services/starlink/                   301
+
+# ブログ
+/blog                                               /blog/                                301
+
+# カテゴリページ(URLエンコード版)
+/archives/category/%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9    /services/                     301
+
+# 固定ページ
+/otoiawase99                                        /contact/                             301
+/otoiawase99/                                       /contact/                             301
+/message                                            /profile/                             301
+/message/                                           /profile/                             301

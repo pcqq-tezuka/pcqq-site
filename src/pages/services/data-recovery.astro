@@ -83,49 +83,58 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
       </div>
     </div>
 
-    <!-- ブロック③ なぜ専門ラボと提携しているのか -->
+    <!-- ブロック③ ハイブリッド体制（画像中心レイアウト） -->
     <section class="mb-10">
-      <h2 class="text-xl font-bold text-gray-900 mb-4">地元の安心と、首都圏の高度技術。両方をお届けします。</h2>
-      <p class="text-gray-700 leading-relaxed text-sm mb-5">
-        ヘッドクラッシュや基板損傷など物理障害を伴う復旧には、無塵環境（クリーンルーム）・顕微鏡作業・ファームウェア解析装置が不可欠です。<br class="hidden sm:block" /><br class="hidden sm:block" />
-        これらの設備と専任技術者を、地方の店舗で常設するのは現実的ではありません。<br />
-        そこでPCQQは、以下のハイブリッド体制を採用しています。
+      <h2 class="text-xl font-bold text-gray-900 mb-2">地元の安心と、首都圏の高度技術。両方をお届けします。</h2>
+      <p class="text-gray-500 text-sm mb-5">ハイブリッド体制で、お客様の大切なデータを救出します。</p>
+
+      <!-- メイン画像 -->
+      <img
+        src="/images/data-recovery-hybrid.jpg"
+        alt="PCQQが受付・梱包を担当し、首都圏の専門ラボが本格復旧作業を行うハイブリッド体制の図解"
+        width="1024"
+        height="683"
+        loading="lazy"
+        class="w-full rounded-xl shadow-md mb-6 object-cover"
+      />
+
+      <!-- 補足説明文 -->
+      <p class="text-gray-700 text-sm leading-relaxed mb-6">
+        ヘッドクラッシュや基板損傷など物理障害を伴う復旧には、無塵環境（クリーンルーム）・顕微鏡作業・ファームウェア解析装置が必須です。
+        これらの設備と専任技術者を、地方の店舗で常設するのは現実的ではありません。<br /><br />
+        そこでPCQQは、専門ラボとの提携体制で「地元の安心」と「専門技術」の両方を実現しています。
+        お客様の窓口は、最初から最後までPCQQです。
       </p>
 
-      <!-- 役割分担ダイアグラム -->
-      <div class="bg-blue-50 rounded-2xl p-6 mb-4">
-        <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-0">
-          <!-- PCQQ -->
-          <div class="flex-1 bg-white rounded-xl border border-blue-200 p-4 text-center w-full">
-            <div class="text-xs font-bold text-blue-500 uppercase tracking-wide mb-1">PCQQ（安心院）</div>
-            <div class="text-sm font-bold text-gray-800 mb-2">地元の窓口</div>
-            <ul class="text-xs text-gray-600 space-y-1 text-left">
-              <li class="flex items-center gap-1"><span class="text-blue-400">▶</span> 受付・ヒアリング</li>
-              <li class="flex items-center gap-1"><span class="text-blue-400">▶</span> 初期診断・安全梱包</li>
-              <li class="flex items-center gap-1"><span class="text-blue-400">▶</span> 納品・アフターサポート</li>
-            </ul>
+      <!-- 3つのポイントカード -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        {[
+          {
+            num: '1',
+            title: '地元で受付・診断',
+            body: 'PCQQが現地でお客様の状況を把握し、メディアを安全に梱包します。',
+          },
+          {
+            num: '2',
+            title: '専門ラボで復旧',
+            body: 'クリーンルーム・解析機器を備えた首都圏のラボが、高度復旧を実施。',
+          },
+          {
+            num: '3',
+            title: '地元で納品・アフター',
+            body: '復旧データはPCQQ経由でお渡し。アフター相談も対面で対応します。',
+          },
+        ].map(card => (
+          <div class="bg-blue-50 border border-blue-100 rounded-xl p-4">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center shrink-0">
+                {card.num}
+              </div>
+              <div class="font-bold text-gray-900 text-sm">{card.title}</div>
+            </div>
+            <p class="text-xs text-gray-600 leading-relaxed">{card.body}</p>
           </div>
-
-          <!-- 矢印 -->
-          <div class="flex flex-row sm:flex-col items-center gap-1 sm:mx-3 my-1 sm:my-0">
-            <div class="text-blue-400 font-bold text-lg rotate-90 sm:rotate-0">⇄</div>
-            <div class="text-xs text-blue-500 font-medium whitespace-nowrap">安全発送</div>
-          </div>
-
-          <!-- 提携ラボ -->
-          <div class="flex-1 bg-blue-600 rounded-xl border border-blue-600 p-4 text-center w-full">
-            <div class="text-xs font-bold text-blue-200 uppercase tracking-wide mb-1">提携専門ラボ（首都圏）</div>
-            <div class="text-sm font-bold text-white mb-2">クリーンルーム完備</div>
-            <ul class="text-xs text-blue-100 space-y-1 text-left">
-              <li class="flex items-center gap-1"><span class="text-blue-300">▶</span> 障害レベル特定・診断</li>
-              <li class="flex items-center gap-1"><span class="text-blue-300">▶</span> ドライブ分解・修復</li>
-              <li class="flex items-center gap-1"><span class="text-blue-300">▶</span> データ抽出・復旧</li>
-            </ul>
-          </div>
-        </div>
-        <p class="text-xs text-blue-700 mt-4 text-center">
-          お客様の窓口は最初から最後まで PCQQ。提携ラボと直接やり取りする必要はありません。
-        </p>
+        ))}
       </div>
     </section>
 

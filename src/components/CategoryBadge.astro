@@ -1,0 +1,25 @@
+---
+interface Props {
+  slug?: string;
+}
+
+const BADGE: Record<string, { label: string; cls: string }> = {
+  scam: { label: 'サポート詐欺対策', cls: 'bg-red-100 text-red-700 ring-1 ring-inset ring-red-200' },
+  case: { label: '修理事例',         cls: 'bg-blue-100 text-blue-700 ring-1 ring-inset ring-blue-200' },
+  tips: { label: 'お役立ち情報',     cls: 'bg-green-100 text-green-700 ring-1 ring-inset ring-green-200' },
+  news:        { label: 'お知らせ',         cls: 'bg-gray-100 text-gray-600 ring-1 ring-inset ring-gray-200' },
+  information: { label: 'お知らせ',         cls: 'bg-gray-100 text-gray-600 ring-1 ring-inset ring-gray-200' },
+};
+
+const { slug } = Astro.props;
+const badge = slug ? BADGE[slug] : null;
+---
+
+{badge && (
+  <a
+    href={`/blog/category/${slug}`}
+    class={`inline-block text-xs font-semibold px-3 py-1 rounded-full ${badge.cls} hover:opacity-75 transition-opacity`}
+  >
+    {badge.label}
+  </a>
+)}
