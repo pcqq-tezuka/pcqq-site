@@ -60,7 +60,7 @@ export function getOgImageUrl(thumbnail?: MicroCMSImage): string {
 export async function getBlogList(limit = 20, offset = 0) {
   return client.getList<BlogPost>({
     endpoint: 'blogs',
-    queries:  { limit, offset, orders: '-publishedAt' },
+    queries:  { limit, offset, orders: '-publishedAt', depth: 1 },
   });
 }
 
@@ -68,7 +68,7 @@ export async function getBlogList(limit = 20, offset = 0) {
 export async function getLatestBlogs(limit = 3) {
   return client.getList<BlogPost>({
     endpoint: 'blogs',
-    queries:  { limit, orders: '-publishedAt' },
+    queries:  { limit, orders: '-publishedAt', depth: 1 },
   });
 }
 
@@ -76,7 +76,7 @@ export async function getLatestBlogs(limit = 3) {
 export async function getAllBlogs() {
   return client.getList<BlogPost>({
     endpoint: 'blogs',
-    queries:  { limit: 100, orders: '-publishedAt' },
+    queries:  { limit: 100, orders: '-publishedAt', depth: 1 },
   });
 }
 
@@ -84,7 +84,7 @@ export async function getAllBlogs() {
 export async function getBlogsByCategory(categoryId: string, limit = 20, offset = 0) {
   return client.getList<BlogPost>({
     endpoint: 'blogs',
-    queries:  { limit, offset, orders: '-publishedAt', filters: `category[equals]${categoryId}` },
+    queries:  { limit, offset, orders: '-publishedAt', depth: 1, filters: `category[equals]${categoryId}` },
   });
 }
 

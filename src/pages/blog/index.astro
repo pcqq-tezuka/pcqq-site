@@ -47,6 +47,7 @@ try {
         {posts.map(post => {
           const excerpt = post.excerpt ?? extractExcerpt(post.body);
           const catSlug = getCategorySlug(post.category);
+          const catName = typeof post.category === 'object' ? post.category?.name : undefined;
           const postSlug = getPostSlug(post);
           return (
             <article class="flex flex-col bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
@@ -74,7 +75,7 @@ try {
               {/* テキスト */}
               <div class="p-6 flex flex-col flex-1">
                 <div class="flex items-center gap-2 mb-2">
-                  <CategoryBadge slug={catSlug} />
+                  <CategoryBadge slug={catSlug} name={catName} />
                   <time datetime={post.publishedAt} class="text-xs text-gray-400">
                     {formatDate(post.publishedAt)}
                   </time>

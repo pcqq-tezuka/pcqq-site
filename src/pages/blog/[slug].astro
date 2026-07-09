@@ -38,7 +38,9 @@ const ogImage = getOgImageUrl(post.thumbnail);
 const categorySlug = typeof post.category === 'string'
   ? post.category
   : post.category?.slug;
-const categoryName = categorySlug ? CATEGORY_META[categorySlug]?.label : undefined;
+const categoryName = categorySlug
+  ? (CATEGORY_META[categorySlug]?.label ?? (typeof post.category === 'object' ? post.category?.name : undefined))
+  : undefined;
 ---
 
 <Layout
@@ -53,8 +55,8 @@ const categoryName = categorySlug ? CATEGORY_META[categorySlug]?.label : undefin
     <Breadcrumb items={[
       { label: 'ホーム', href: '/' },
       { label: 'ブログ', href: '/blog' },
-      ...(categorySlug && categoryName
-        ? [{ label: categoryName, href: `/blog/category/${categorySlug}` }]
+      ...(categorySlug
+        ? [{ label: categoryName ?? categorySlug, href: `/blog/category/${categorySlug}` }]
         : []),
       { label: post.title },
     ]} />
@@ -76,7 +78,7 @@ const categoryName = categorySlug ? CATEGORY_META[categorySlug]?.label : undefin
     <!-- ヘッダー -->
     <header class="mb-8 mt-4">
       <div class="flex items-center gap-3 mb-3">
-        <CategoryBadge slug={categorySlug} />
+        <CategoryBadge slug={categorySlug} name={categoryName} />
         <time datetime={post.publishedAt} class="text-sm text-gray-400">
           {formatDate(post.publishedAt)}
           {post.revisedAt !== post.publishedAt && (

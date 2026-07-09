@@ -1,6 +1,7 @@
 ---
 interface Props {
   slug?: string;
+  name?: string;
 }
 
 const BADGE: Record<string, { label: string; cls: string }> = {
@@ -11,15 +12,19 @@ const BADGE: Record<string, { label: string; cls: string }> = {
   information: { label: 'お知らせ',         cls: 'bg-gray-100 text-gray-600 ring-1 ring-inset ring-gray-200' },
 };
 
-const { slug } = Astro.props;
-const badge = slug ? BADGE[slug] : null;
+const DEFAULT_CLS = 'bg-gray-100 text-gray-600 ring-1 ring-inset ring-gray-200';
+
+const { slug, name } = Astro.props;
+const badgeFromMap = slug ? BADGE[slug] : null;
+const label = badgeFromMap?.label ?? name;
+const cls = badgeFromMap?.cls ?? DEFAULT_CLS;
 ---
 
-{badge && (
+{slug && label && (
   <a
     href={`/blog/category/${slug}`}
-    class={`inline-block text-xs font-semibold px-3 py-1 rounded-full ${badge.cls} hover:opacity-75 transition-opacity`}
+    class={`inline-block text-xs font-semibold px-3 py-1 rounded-full ${cls} hover:opacity-75 transition-opacity`}
   >
-    {badge.label}
+    {label}
   </a>
 )}

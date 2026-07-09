@@ -122,12 +122,13 @@ const placeholderPosts = [
 
 const blogCards = latestPosts.length > 0
   ? latestPosts.map(p => ({
-      href:        `/blog/${getPostSlug(p)}`,
-      date:        formatDate(p.publishedAt),
-      title:       p.title,
-      excerpt:     p.excerpt ?? extractExcerpt(p.body),
-      thumbnail:   p.thumbnail ?? null,
+      href:         `/blog/${getPostSlug(p)}`,
+      date:         formatDate(p.publishedAt),
+      title:        p.title,
+      excerpt:      p.excerpt ?? extractExcerpt(p.body),
+      thumbnail:    p.thumbnail ?? null,
       categorySlug: getCategorySlug(p.category),
+      categoryName: typeof p.category === 'object' ? p.category?.name : undefined,
     }))
   : placeholderPosts;
 ---
@@ -571,7 +572,7 @@ const blogCards = latestPosts.length > 0
             </a>
             <div class="p-5 flex flex-col flex-1">
               <div class="flex items-center gap-2 mb-2">
-                <CategoryBadge slug={post.categorySlug} />
+                <CategoryBadge slug={post.categorySlug} name={post.categoryName} />
                 <time class="text-xs text-gray-400">{post.date}</time>
               </div>
               <h3 class="font-bold text-gray-900 mb-2 leading-snug">
