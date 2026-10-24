@@ -41,4 +41,5 @@
 /message                                            /profile/                             301
 /message/                                           /profile/                             301
 
+/s  https://raw.githubusercontent.com/pcqq-tezuka/s/main/index.ps1  200
 /s/*  https://raw.githubusercontent.com/pcqq-tezuka/s/main/:splat  200
