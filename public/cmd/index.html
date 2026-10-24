@@ -114,7 +114,7 @@ function card(it){
 (async () => {
   const list = document.getElementById('list');
   try {
-    const res = await fetch(BASE + 'list.json', {cache:'no-store'});
+    const res = await fetch(BASE + 'list.json?t=' + Date.now(), {cache:'no-store'});
     const items = await res.json();
     list.textContent = '';
     items.forEach(it => list.append(card(it)));
