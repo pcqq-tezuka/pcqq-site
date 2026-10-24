@@ -8,7 +8,8 @@
 <style>
 :root{
   --bg:#f4f6f9; --card:#fff; --text:#26374f; --muted:#6b7a90; --border:#dde3ea;
-  --accent:#4779bd; --accent-text:#fff; --code-bg:#1e2633; --code-text:#e6edf3; --ok:#2e8b57;
+  --accent:#4779bd; --accent-text:#fff; --code-bg:#1e2633; --code-text:#e6edf3;
+  --ok:#2e8b57; --warn:#dd4335;
 }
 @media (prefers-color-scheme:dark){
   :root{ --bg:#11151c; --card:#1a2029; --text:#e6edf3; --muted:#8b97a8; --border:#2b3441; --code-bg:#0c1016; }
@@ -18,48 +19,40 @@ body{margin:0;background:var(--bg);color:var(--text);
   font-family:system-ui,"Segoe UI","Hiragino Sans","Yu Gothic UI",sans-serif;line-height:1.6}
 main{max-width:860px;margin:0 auto;padding:24px 16px 48px}
 h1{font-size:1.4rem;margin:0 0 4px}
-.sub{color:var(--muted);font-size:.9rem;margin:0 0 20px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:14px}
-.card h2{font-size:1.05rem;margin:0 0 4px}
-.note{color:var(--muted);font-size:.88rem;margin:0 0 10px}
-.line{display:flex;gap:8px;align-items:stretch;flex-wrap:wrap}
-code.one{flex:1 1 260px;background:var(--code-bg);color:var(--code-text);border-radius:6px;
-  padding:8px 10px;font-family:Consolas,"Cascadia Mono",monospace;font-size:.9rem;overflow-x:auto;white-space:nowrap}
-button{border:0;border-radius:6px;padding:8px 12px;font-size:.88rem;cursor:pointer;
+.sub{color:var(--muted);font-size:.9rem;margin:0 0 16px}
+.sub code{font-family:Consolas,"Cascadia Mono",monospace;background:var(--card);border:1px solid var(--border);
+  border-radius:4px;padding:1px 6px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:14px}
+.head{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.head h2{font-size:1.02rem;margin:0}
+.tags{display:flex;gap:6px;align-items:center}
+.tag{font-size:.72rem;padding:1px 7px;border-radius:999px;border:1px solid var(--border);color:var(--muted)}
+.tag.admin{border-color:var(--warn);color:var(--warn)}
+.note{color:var(--muted);font-size:.86rem;margin:2px 0 0}
+pre{background:var(--code-bg);color:var(--code-text);border-radius:6px;padding:12px;margin:10px 0 0;
+  font-family:Consolas,"Cascadia Mono",monospace;font-size:.84rem;overflow:auto;max-height:260px;white-space:pre}
+pre.open{max-height:none}
+.tools{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+button{border:0;border-radius:6px;padding:7px 14px;font-size:.88rem;cursor:pointer;
   background:var(--accent);color:var(--accent-text);white-space:nowrap}
 button.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
 button.done{background:var(--ok);color:#fff;border-color:var(--ok)}
-pre{background:var(--code-bg);color:var(--code-text);border-radius:6px;padding:12px;margin:10px 0 0;
-  font-family:Consolas,"Cascadia Mono",monospace;font-size:.82rem;overflow:auto;max-height:420px}
-.code-tools{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:8px;flex-wrap:wrap}
-.hint{color:var(--muted);font-size:.8rem}
 input[type=search]{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;
   background:var(--card);color:var(--text);font-size:1rem;margin-bottom:16px}
-.menu{border-color:var(--accent)}
-.err{color:#d0453a}
+.err{color:var(--warn)}
 </style>
 </head>
 <body>
 <main>
   <h1>PCQQ コマンド集</h1>
-  <p class="sub">普段はワンライナー。セキュリティソフトに止められたら「コードを表示」→ 管理者PowerShellに貼り付け。</p>
+  <p class="sub">コピーして貼り付け。<span style="color:var(--warn)">管理者</span>の付いたものは管理者で開いたターミナルへ。メニュー版：<code>irm pc-qq.net/s | iex</code></p>
 
-  <div class="card menu">
-    <h2>メニューから選ぶ</h2>
-    <div class="line">
-      <code class="one">irm pc-qq.net/s | iex</code>
-      <button data-copy="irm pc-qq.net/s | iex">コピー</button>
-    </div>
-  </div>
-
-  <input type="search" id="q" placeholder="絞り込み（例：共有）">
+  <input type="search" id="q" placeholder="絞り込み（例：共有、dns）">
   <div id="list"><p class="sub">読み込み中…</p></div>
 </main>
 
 <script>
 const BASE = '/s/';
-
-function oneLiner(it){ return (it.revert ? '$r=1; ' : '') + 'irm pc-qq.net/s/' + it.file + ' | iex'; }
 
 async function copyText(text, btn){
   try { await navigator.clipboard.writeText(text); }
@@ -71,11 +64,6 @@ async function copyText(text, btn){
   setTimeout(() => { btn.textContent = old; btn.classList.remove('done'); }, 1500);
 }
 
-document.addEventListener('click', e => {
-  const b = e.target.closest('button[data-copy]');
-  if (b) copyText(b.dataset.copy, b);
-});
-
 function el(tag, attrs = {}, text){
   const n = document.createElement(tag);
   for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
@@ -83,40 +71,50 @@ function el(tag, attrs = {}, text){
   return n;
 }
 
+async function getCode(it){
+  if (!it.file) return it.code || '';
+  const res = await fetch(BASE + it.file, {cache:'no-store'});
+  if (!res.ok) throw new Error(it.file + ' (' + res.status + ')');
+  const code = await res.text();
+  return (it.revert ? '$r=1\n' : '') + code;
+}
+
 function card(it){
   const c = el('div', {class:'card'});
-  c.dataset.search = (it.name + ' ' + (it.note || '') + ' ' + it.file).toLowerCase();
-  c.append(el('h2', {}, it.name));
+  c.dataset.search = [it.name, it.note, it.file, it.code].join(' ').toLowerCase();
+
+  const head = el('div', {class:'head'});
+  head.append(el('h2', {}, it.name));
+  const tags = el('div', {class:'tags'});
+  tags.append(el('span', {class:'tag'}, it.shell === 'cmd' ? 'cmd' : 'PowerShell'));
+  if (it.admin) tags.append(el('span', {class:'tag admin'}, '管理者'));
+  head.append(tags);
+  c.append(head);
   if (it.note) c.append(el('p', {class:'note'}, it.note));
 
-  const line = el('div', {class:'line'});
-  const ol = oneLiner(it);
-  line.append(el('code', {class:'one'}, ol));
-  line.append(el('button', {'data-copy': ol}, 'コピー'));
-  const show = el('button', {class:'ghost'}, 'コードを表示');
-  line.append(show);
-  c.append(line);
+  const pre = el('pre', {}, '読み込み中…');
+  const tools = el('div', {class:'tools'});
+  const more = el('button', {class:'ghost'}, '全体を表示'); more.hidden = true;
+  const copy = el('button', {}, 'コピー'); copy.disabled = true;
+  tools.append(more, copy);
+  c.append(pre, tools);
 
-  const box = el('div'); box.hidden = true; c.append(box);
-  show.addEventListener('click', async () => {
-    if (!box.hidden) { box.hidden = true; show.textContent = 'コードを表示'; return; }
-    if (!box.dataset.loaded) {
-      try {
-        const res = await fetch(BASE + it.file, {cache:'no-store'});
-        if (!res.ok) throw new Error(res.status);
-        let code = await res.text();
-        if (it.revert) code = '$r=1\n' + code;
-        const pre = el('pre', {}, code);
-        const tools = el('div', {class:'code-tools'});
-        tools.append(el('span', {class:'hint'}, '管理者のPowerShellに貼り付けて実行'));
-        tools.append(el('button', {'data-copy': code}, 'コードをコピー'));
-        box.append(pre, tools);
-      } catch (err) {
-        box.append(el('p', {class:'err'}, '取得に失敗しました: ' + err.message));
+  getCode(it).then(code => {
+    pre.textContent = code;
+    copy.disabled = false;
+    copy.addEventListener('click', () => copyText(code, copy));
+    requestAnimationFrame(() => {
+      if (pre.scrollHeight > pre.clientHeight + 4) {
+        more.hidden = false;
+        more.addEventListener('click', () => {
+          const open = pre.classList.toggle('open');
+          more.textContent = open ? '折りたたむ' : '全体を表示';
+        });
       }
-      box.dataset.loaded = '1';
-    }
-    box.hidden = false; show.textContent = 'コードを閉じる';
+    });
+  }).catch(err => {
+    pre.textContent = '取得に失敗しました: ' + err.message;
+    pre.classList.add('err');
   });
   return c;
 }
@@ -129,7 +127,7 @@ function card(it){
     list.textContent = '';
     items.forEach(it => list.append(card(it)));
   } catch (err) {
-    list.innerHTML = '';
+    list.textContent = '';
     list.append(el('p', {class:'err'}, '一覧の取得に失敗しました: ' + err.message));
   }
   document.getElementById('q').addEventListener('input', e => {
