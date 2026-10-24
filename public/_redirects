@@ -40,3 +40,5 @@
 /otoiawase99/                                       /contact/                             301
 /message                                            /profile/                             301
 /message/                                           /profile/                             301
+
+/s/*  https://raw.githubusercontent.com/pcqq-tezuka/s/main/:splat  200
