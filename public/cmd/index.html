@@ -40,6 +40,10 @@ button.done{background:var(--ok);color:#fff;border-color:var(--ok)}
 input[type=search]{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;
   background:var(--card);color:var(--text);font-size:1rem;margin-bottom:16px}
 .err{color:var(--warn)}
+.alt{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px;padding-top:8px;
+  border-top:1px dashed var(--border);font-size:.78rem;color:var(--muted)}
+.alt code{font-family:Consolas,"Cascadia Mono",monospace;font-size:.78rem}
+button.mini{padding:3px 10px;font-size:.75rem;background:transparent;color:var(--accent);border:1px solid var(--accent)}
 </style>
 </head>
 <body>
@@ -71,13 +75,7 @@ function el(tag, attrs = {}, text){
   return n;
 }
 
-async function getCode(it){
-  if (!it.file) return it.code || '';
-  const res = await fetch(BASE + it.file, {cache:'no-store'});
-  if (!res.ok) throw new Error(it.file + ' (' + res.status + ')');
-  const code = await res.text();
-  return (it.revert ? '$r=1\n' : '') + code;
-}
+function oneLiner(it){ return (it.revert ? '$r=1; ' : '') + 'irm pc-qq.net/s/' + it.file + ' | iex'; }
 
 function card(it){
   const c = el('div', {class:'card'});
@@ -92,30 +90,24 @@ function card(it){
   c.append(head);
   if (it.note) c.append(el('p', {class:'note'}, it.note));
 
-  const pre = el('pre', {}, '読み込み中…');
+  const code = it.code || '';
+  const pre = el('pre', {}, code);
   const tools = el('div', {class:'tools'});
-  const more = el('button', {class:'ghost'}, '全体を表示'); more.hidden = true;
-  const copy = el('button', {}, 'コピー'); copy.disabled = true;
-  tools.append(more, copy);
+  const copy = el('button', {}, 'コピー');
+  copy.addEventListener('click', () => copyText(code, copy));
+  tools.append(copy);
   c.append(pre, tools);
 
-  getCode(it).then(code => {
-    pre.textContent = code;
-    copy.disabled = false;
-    copy.addEventListener('click', () => copyText(code, copy));
-    requestAnimationFrame(() => {
-      if (pre.scrollHeight > pre.clientHeight + 4) {
-        more.hidden = false;
-        more.addEventListener('click', () => {
-          const open = pre.classList.toggle('open');
-          more.textContent = open ? '折りたたむ' : '全体を表示';
-        });
-      }
-    });
-  }).catch(err => {
-    pre.textContent = '取得に失敗しました: ' + err.message;
-    pre.classList.add('err');
-  });
+  if (it.file) {
+    const ol = oneLiner(it);
+    const row = el('div', {class:'alt'});
+    row.append(el('span', {}, 'スクリプト版（自動昇格・確認表示つき）：'));
+    row.append(el('code', {}, ol));
+    const b = el('button', {class:'mini'}, 'コピー');
+    b.addEventListener('click', () => copyText(ol, b));
+    row.append(b);
+    c.append(row);
+  }
   return c;
 }
 
