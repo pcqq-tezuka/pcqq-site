@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>PCQQ コマンド集</title>
+<style>
+:root{
+  --bg:#f4f6f9; --card:#fff; --text:#26374f; --muted:#6b7a90; --border:#dde3ea;
+  --accent:#4779bd; --accent-text:#fff; --code-bg:#1e2633; --code-text:#e6edf3; --ok:#2e8b57;
+}
+@media (prefers-color-scheme:dark){
+  :root{ --bg:#11151c; --card:#1a2029; --text:#e6edf3; --muted:#8b97a8; --border:#2b3441; --code-bg:#0c1016; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:system-ui,"Segoe UI","Hiragino Sans","Yu Gothic UI",sans-serif;line-height:1.6}
+main{max-width:860px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:1.4rem;margin:0 0 4px}
+.sub{color:var(--muted);font-size:.9rem;margin:0 0 20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:14px}
+.card h2{font-size:1.05rem;margin:0 0 4px}
+.note{color:var(--muted);font-size:.88rem;margin:0 0 10px}
+.line{display:flex;gap:8px;align-items:stretch;flex-wrap:wrap}
+code.one{flex:1 1 260px;background:var(--code-bg);color:var(--code-text);border-radius:6px;
+  padding:8px 10px;font-family:Consolas,"Cascadia Mono",monospace;font-size:.9rem;overflow-x:auto;white-space:nowrap}
+button{border:0;border-radius:6px;padding:8px 12px;font-size:.88rem;cursor:pointer;
+  background:var(--accent);color:var(--accent-text);white-space:nowrap}
+button.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+button.done{background:var(--ok);color:#fff;border-color:var(--ok)}
+pre{background:var(--code-bg);color:var(--code-text);border-radius:6px;padding:12px;margin:10px 0 0;
+  font-family:Consolas,"Cascadia Mono",monospace;font-size:.82rem;overflow:auto;max-height:420px}
+.code-tools{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:8px;flex-wrap:wrap}
+.hint{color:var(--muted);font-size:.8rem}
+input[type=search]{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;
+  background:var(--card);color:var(--text);font-size:1rem;margin-bottom:16px}
+.menu{border-color:var(--accent)}
+.err{color:#d0453a}
+</style>
+</head>
+<body>
+<main>
+  <h1>PCQQ コマンド集</h1>
+  <p class="sub">普段はワンライナー。セキュリティソフトに止められたら「コードを表示」→ 管理者PowerShellに貼り付け。</p>
+
+  <div class="card menu">
+    <h2>メニューから選ぶ</h2>
+    <div class="line">
+      <code class="one">irm pc-qq.net/s | iex</code>
+      <button data-copy="irm pc-qq.net/s | iex">コピー</button>
+    </div>
+  </div>
+
+  <input type="search" id="q" placeholder="絞り込み（例：共有）">
+  <div id="list"><p class="sub">読み込み中…</p></div>
+</main>
+
+<script>
+const BASE = '/s/';
+
+function oneLiner(it){ return (it.revert ? '$r=1; ' : '') + 'irm pc-qq.net/s/' + it.file + ' | iex'; }
+
+async function copyText(text, btn){
+  try { await navigator.clipboard.writeText(text); }
+  catch {
+    const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t);
+    t.select(); document.execCommand('copy'); t.remove();
+  }
+  const old = btn.textContent; btn.textContent = 'コピーしました'; btn.classList.add('done');
+  setTimeout(() => { btn.textContent = old; btn.classList.remove('done'); }, 1500);
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('button[data-copy]');
+  if (b) copyText(b.dataset.copy, b);
+});
+
+function el(tag, attrs = {}, text){
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+  if (text != null) n.textContent = text;
+  return n;
+}
+
+function card(it){
+  const c = el('div', {class:'card'});
+  c.dataset.search = (it.name + ' ' + (it.note || '') + ' ' + it.file).toLowerCase();
+  c.append(el('h2', {}, it.name));
+  if (it.note) c.append(el('p', {class:'note'}, it.note));
+
+  const line = el('div', {class:'line'});
+  const ol = oneLiner(it);
+  line.append(el('code', {class:'one'}, ol));
+  line.append(el('button', {'data-copy': ol}, 'コピー'));
+  const show = el('button', {class:'ghost'}, 'コードを表示');
+  line.append(show);
+  c.append(line);
+
+  const box = el('div'); box.hidden = true; c.append(box);
+  show.addEventListener('click', async () => {
+    if (!box.hidden) { box.hidden = true; show.textContent = 'コードを表示'; return; }
+    if (!box.dataset.loaded) {
+      try {
+        const res = await fetch(BASE + it.file, {cache:'no-store'});
+        if (!res.ok) throw new Error(res.status);
+        let code = await res.text();
+        if (it.revert) code = '$r=1\n' + code;
+        const pre = el('pre', {}, code);
+        const tools = el('div', {class:'code-tools'});
+        tools.append(el('span', {class:'hint'}, '管理者のPowerShellに貼り付けて実行'));
+        tools.append(el('button', {'data-copy': code}, 'コードをコピー'));
+        box.append(pre, tools);
+      } catch (err) {
+        box.append(el('p', {class:'err'}, '取得に失敗しました: ' + err.message));
+      }
+      box.dataset.loaded = '1';
+    }
+    box.hidden = false; show.textContent = 'コードを閉じる';
+  });
+  return c;
+}
+
+(async () => {
+  const list = document.getElementById('list');
+  try {
+    const res = await fetch(BASE + 'list.json', {cache:'no-store'});
+    const items = await res.json();
+    list.textContent = '';
+    items.forEach(it => list.append(card(it)));
+  } catch (err) {
+    list.innerHTML = '';
+    list.append(el('p', {class:'err'}, '一覧の取得に失敗しました: ' + err.message));
+  }
+  document.getElementById('q').addEventListener('input', e => {
+    const q = e.target.value.trim().toLowerCase();
+    list.querySelectorAll('.card').forEach(c => { c.hidden = q && !c.dataset.search.includes(q); });
+  });
+})();
+</script>
+</body>
+</html>
